@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="images/favicon.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculadora de Carbono — ECONEXUS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+    <img src="images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="profile.html">Perfil</a><a href="resultados.html">Resultados</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <button class="icon-btn menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+    <div class="section-head reveal in">
+      <span class="eyebrow">🌱 Calculadora interativa</span>
+      <h2>Calcule sua pegada de carbono</h2>
+      <p>Preencha os campos abaixo com seus dados de consumo. Os resultados são estimados com base em coeficientes oficiais.</p>
+    </div>
+
+    <form onsubmit="return calcCarbon(event)">
+      <div class="calc-grid">
+        <div class="calc-field"><label><span class="ico">⚡</span> Consumo de energia</label><input name="energia" type="number" min="0" step="any" placeholder="kWh por mês" required><small>Veja na sua conta de luz mensal</small></div>
+        <div class="calc-field"><label><span class="ico">🚗</span> Transporte (carro)</label><input name="transporte" type="number" min="0" step="any" placeholder="km por semana" required><small>Distância média percorrida</small></div>
+        <div class="calc-field"><label><span class="ico">⛽</span> Combustível</label><input name="combustivel" type="number" min="0" step="any" placeholder="litros por mês" required><small>Gasolina ou diesel</small></div>
+        <div class="calc-field"><label><span class="ico">✈️</span> Viagens de avião</label><input name="viagens" type="number" min="0" step="any" placeholder="horas por ano" required><small>Total de voos no ano</small></div>
+        <div class="calc-field"><label><span class="ico">💧</span> Consumo de água</label><input name="agua" type="number" min="0" step="any" placeholder="litros por dia" required><small>Média diária por pessoa</small></div>
+        <div class="calc-field"><label><span class="ico">🗑️</span> Resíduos</label><input name="residuos" type="number" min="0" step="any" placeholder="kg por semana" required><small>Lixo não reciclado</small></div>
+      </div>
+      <div style="text-align:center;margin-top:36px">
+        <button class="btn btn-primary btn-lg" type="submit">Calcular minha pegada →</button>
+      </div>
+    </form>
+  </div>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>

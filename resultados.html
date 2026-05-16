@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="images/favicon.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resultados — ECONEXOS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+       <img src="images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="calculadora.html">Calculadora</a><a href="profile.html">Perfil</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <button class="icon-btn menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+    <div class="result-hero reveal in">
+      <p style="color:var(--muted);font-size:.95rem">Sua pegada de carbono anual estimada</p>
+      <div class="result-num" id="num">0</div>
+      <div class="result-unit">kg CO₂ equivalente / ano</div>
+      <div id="indi" class="indicator">—</div>
+      <div class="donut">
+        <svg viewBox="0 0 36 36" width="220" height="220">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient></defs>
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--surface-2)" stroke-width="3"/>
+          <circle id="ring" cx="18" cy="18" r="15.9" fill="none" stroke="url(#g1)" stroke-width="3" stroke-dasharray="0 100" stroke-linecap="round" transform="rotate(-90 18 18)" style="transition:stroke-dasharray 1.4s"/>
+          <text x="18" y="20" text-anchor="middle" font-size="6" fill="var(--text)" font-weight="700" id="pct">0%</text>
+        </svg>
+      </div>
+      <p style="color:var(--muted);max-width:520px;margin:10px auto 0">Comparação com a média mundial: <strong id="cmp">—</strong></p>
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="calculadora.html" class="btn btn-ghost">↺ Refazer cálculo</a>
+        <button class="btn btn-primary" onclick="downloadReport()">⬇ Baixar relatório</button>
+      </div>
+    </div>
+
+    <h3 style="margin:50px 0 16px">Distribuição das emissões</h3>
+    <div class="chart" id="breakdown"></div>
+
+    <h3 style="margin:50px 0 16px">Sugestões para reduzir seu impacto</h3>
+    <div class="tips">
+      <div class="tip"><div class="ico">💡</div><strong>Energia limpa</strong><p style="color:var(--muted);margin-top:6px;font-size:.9rem">Migre para tarifas verdes ou instale painéis solares.</p></div>
+      <div class="tip"><div class="ico">🚲</div><strong>Mobilidade ativa</strong><p style="color:var(--muted);margin-top:6px;font-size:.9rem">Substitua trajetos curtos de carro por bike ou caminhada.</p></div>
+      <div class="tip"><div class="ico">♻️</div><strong>Reciclagem</strong><p style="color:var(--muted);margin-top:6px;font-size:.9rem">Separe resíduos e composte orgânicos sempre que possível.</p></div>
+    </div>
+  </div>
+</main>
+
+<script src="js/script.js"></script>
+<script>
+(function(){
+  const r=JSON.parse(localStorage.getItem('econexos-last')||'null');
+  if(!r){document.getElementById('num').textContent='—';document.getElementById('indi').textContent='Faça um cálculo primeiro';return}
+  const n=document.getElementById('num');let cur=0;const step=r.total/60;
+  (function tick(){cur+=step;if(cur>=r.total){n.textContent=r.total.toLocaleString('pt-BR');return}n.textContent=Math.floor(cur).toLocaleString('pt-BR');requestAnimationFrame(tick)})();
+
+  const ind=document.getElementById('indi');
+  let lvl='Baixo',cls='lvl-low';
+  if(r.total>6000){lvl='Alto';cls='lvl-high'}else if(r.total>2000){lvl='Médio';cls='lvl-med'}
+  ind.textContent='Nível: '+lvl;ind.classList.add(cls);
+
+  const world=4800; // kg/year average
+  const pct=Math.min(100,Math.round(r.total/world*100));
+  setTimeout(()=>{document.getElementById('ring').setAttribute('stroke-dasharray',pct+' '+(100-pct));document.getElementById('pct').textContent=pct+'%'},150);
+  document.getElementById('cmp').textContent=(r.total>world?'+':'')+(r.total-world).toLocaleString('pt-BR')+' kg em relação à média mundial ('+world.toLocaleString('pt-BR')+' kg)';
+
+  const labels={energia:'Energia',transporte:'Carro',combustivel:'Comb.',viagens:'Aviões',agua:'Água',residuos:'Resíduos'};
+  const max=Math.max(...Object.values(r.breakdown))||1;
+  document.getElementById('breakdown').innerHTML=Object.entries(r.breakdown).map(([k,v])=>{
+    const h=Math.max(6,Math.round(v/max*100));
+    return `<div class="bar" style="height:0" data-h="${h}"><span>${labels[k]}</span></div>`;
+  }).join('');
+  setTimeout(()=>document.querySelectorAll('#breakdown .bar').forEach(b=>b.style.height=b.dataset.h+'%'),250);
+
+  window.downloadReport=()=>{
+    const txt=`ECONEXOS — Relatório de Pegada de Carbono\n\nTotal anual: ${r.total} kg CO2\nNível: ${lvl}\nMédia mundial: ${world} kg\n\nDistribuição:\n${Object.entries(r.breakdown).map(([k,v])=>`- ${labels[k]}: ${Math.round(v)} kg`).join('\n')}\n\nGerado em ${new Date().toLocaleString('pt-BR')}`;
+    const b=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');
+    a.href=URL.createObjectURL(b);a.download='econexos-relatorio.txt';a.click();
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="images/N - logo 1.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meu perfil — ECONEXOS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+    <img src="images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+    <nav class="nav-links">
+      <a href="index.html">Início</a><a href="calculadora.html">Calculadora</a><a href="resultados.html">Resultados</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <button class="icon-btn menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+    <div class="profile-grid">
+      <aside class="profile-card reveal in">
+        <div class="avatar" id="avatar">U</div>
+        <h3 id="uname">Usuário</h3>
+        <div class="email" id="uemail">email@econexos.com</div>
+        <button class="btn btn-primary btn-block">Editar perfil</button>
+        <div class="progress-wrap" style="text-align:left">
+          <div style="display:flex;justify-content:space-between;font-size:.85rem"><span>Progresso ecológico</span><span id="pPct">68%</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="pFill" style="width:0"></div></div>
+        </div>
+      </aside>
+
+      <div>
+        <div class="stats" style="margin-bottom:24px">
+          <div class="stat"><div class="stat-num" id="sTotal">0</div><div class="stat-label">CO₂ total (kg/ano)</div></div>
+          <div class="stat"><div class="stat-num" id="sCount">0</div><div class="stat-label">Cálculos realizados</div></div>
+          <div class="stat"><div class="stat-num">12</div><div class="stat-label">Árvores equivalentes</div></div>
+          <div class="stat"><div class="stat-num">A+</div><div class="stat-label">Selo ambiental</div></div>
+        </div>
+
+        <h3 style="margin-bottom:14px">Histórico de cálculos</h3>
+        <div class="history" id="history">
+          <div class="history-item"><div>Sem cálculos ainda — <a href="calculadora.html" style="color:var(--primary);font-weight:600">faça o primeiro</a></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/script.js"></script>
+<script>
+(function(){
+  const u=JSON.parse(localStorage.getItem('econexos-user')||'{"name":"Visitante","email":"convidado@econexos.com"}');
+  document.getElementById('uname').textContent=u.name;
+  document.getElementById('uemail').textContent=u.email;
+  document.getElementById('avatar').textContent=(u.name[0]||'U').toUpperCase();
+  setTimeout(()=>document.getElementById('pFill').style.width='68%',200);
+
+  const h=JSON.parse(localStorage.getItem('econexos-history')||'[]');
+  if(h.length){
+    document.getElementById('sCount').textContent=h.length;
+    document.getElementById('sTotal').textContent=h[0].total.toLocaleString('pt-BR');
+    document.getElementById('history').innerHTML=h.slice(0,8).map(r=>{
+      const lvl=r.total<2000?['lvl-low','Baixo']:r.total<6000?['lvl-med','Médio']:['lvl-high','Alto'];
+      const d=new Date(r.date).toLocaleDateString('pt-BR');
+      return `<div class="history-item"><div><strong>${r.total.toLocaleString('pt-BR')} kg CO₂</strong><br><small style="color:var(--muted)">${d}</small></div><span class="level ${lvl[0]}">${lvl[1]}</span></div>`;
+    }).join('');
+  }
+})();
+</script>
+</body>
+</html>

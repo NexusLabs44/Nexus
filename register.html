@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="images/favicon.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cadastro — ECONEXUS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+       <img src="images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <a href="login.html" class="btn btn-ghost">Entrar</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-card reveal in">
+      <img src="images/econexus.png" width="180px" alt="logo econexus" style="margin: 0 auto; display: block;" />
+    <p class="sub">Comece a medir e reduzir seu impacto hoje</p>
+    <div id="msg" class="msg"></div>
+    <form onsubmit="return handleRegister(event)">
+      <div class="field"><label>Nome completo</label><input name="name" type="text" required></div>
+      <div class="field"><label>E-mail</label><input name="email" type="email" required></div>
+      <div class="field"><label>Telefone</label><input name="phone" type="tel" required></div>
+      <div class="field"><label>Senha</label><input name="pwd" type="password" required></div>
+      <div class="field"><label>Confirmar senha</label><input name="cpwd" type="password" required></div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Criar conta</button>
+    </form>
+    <p class="alt">Já tem uma conta? <a href="login.html">Entrar</a></p>
+  </div>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
