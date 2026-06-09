@@ -1,18 +1,63 @@
 /* ECONEXOS — Design System */
 :root{
-  --bg:#f6fbf8;--surface:#ffffff;--surface-2:#eef6f1;--text:#0b1f1a;--muted:#5a6b66;
-  --primary:#10b981;--primary-2:#059669;--accent:#0ea5e9;--accent-2:#2563eb;
-  --border:rgba(10,40,30,.08);--shadow:0 10px 30px -12px rgba(6,80,50,.18);
-  --glass:rgba(255,255,255,.6);--ring:rgba(16,185,129,.35);
+  --bg:#f6fbf8;
+  --surface:#ffffff;
+  --surface-2:#eef6f1;
+  --text:#0b1f1a;
+  --muted:#5a6b66;
+  --primary:#10b981;
+  --primary-2:#059669;
+  --accent:#0ea5e9;
+  --accent-2:#2563eb;
+  --border:rgba(10,40,30,.08);
+  --shadow:0 10px 30px -12px rgba(6,80,50,.18);
+  --glass:rgba(255,255,255,.6);
+  --ring:rgba(16,185,129,.35);
   --grad:linear-gradient(135deg,#10b981 0%,#0ea5e9 100%);
-  --radius:16px;--radius-lg:24px;
+  --radius:16px;
+  --radius-lg:24px;
 }
+
 [data-theme="dark"]{
-  --bg:#05080a;--surface:#0b1418;--surface-2:#0f1c22;--text:#e6fff7;--muted:#8aa39c;
-  --primary:#22e39a;--primary-2:#10b981;--accent:#22d3ee;--accent-2:#3b82f6;
-  --border:rgba(120,255,200,.12);--shadow:0 0 40px rgba(34,227,154,.15);
-  --glass:rgba(15,28,34,.55);--ring:rgba(34,227,154,.4);
+  --bg:#05080a;
+  --surface:#0b1418;
+  --surface-2:#0f1c22;
+  --text:#e6fff7;
+  --muted:#8aa39c;
+  --primary:#22e39a;
+  --primary-2:#10b981;
+  --accent:#22d3ee;
+  --accent-2:#3b82f6;
+  --border:rgba(120,255,200,.12);
+  --shadow:0 0 40px rgba(34,227,154,.15);
+  --glass:rgba(15,28,34,.55);
+  --ring:rgba(34,227,154,.4);
   --grad:linear-gradient(135deg,#22e39a 0%,#22d3ee 100%);
+}
+
+/* ========================= */
+/* IMAGENS POR TEMA */
+/* ========================= */
+
+.img-light,
+.img-dark{
+  max-width:100%;
+}
+
+[data-theme="light"] .img-light{
+  display:block;
+}
+
+[data-theme="light"] .img-dark{
+  display:none;
+}
+
+[data-theme="dark"] .img-light{
+  display:none;
+}
+
+[data-theme="dark"] .img-dark{
+  display:block;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
