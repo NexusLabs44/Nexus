@@ -241,16 +241,117 @@ section{padding:80px 0}
   width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);
   background:var(--surface);color:var(--text);font-size:.95rem;transition:.25s;font-family:inherit;
 }
-.field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px var(--ring)}
-.field-row{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;margin:8px 0 16px;color:var(--muted)}
-.field-row a{color:var(--primary);font-weight:600}
-.btn-block{width:100%;justify-content:center}
-.alt{text-align:center;margin-top:18px;font-size:.9rem;color:var(--muted)}
-.alt a{color:var(--primary);font-weight:600}
-.msg{padding:12px 14px;border-radius:10px;font-size:.88rem;margin-bottom:14px;display:none;animation:fade .4s}
-.msg.error{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.3);display:block}
-.msg.ok{background:rgba(16,185,129,.12);color:var(--primary-2);border:1px solid var(--ring);display:block}
-@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+
+.field input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: .95rem;
+  transition: .25s;
+  font-family: inherit;
+}
+
+
+.field input:focus:valid {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.field input:invalid,
+.field input:focus:invalid {
+  border-color: #dc2626;
+  background-color: rgba(239, 68, 68, 0.12);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.3);
+}
+
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+  background: var(--grad);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 14px 0;
+  box-shadow: 0 10px 25px -10px var(--ring);
+  transition: .25s;
+}
+.btn-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -8px var(--ring);
+}
+
+.field-row a,
+.alt a {
+  color: var(--primary);
+  font-weight: 600;
+  transition: .25s;
+}
+.field-row a:hover,
+.alt a:hover {
+  color: var(--accent);
+}
+.field-row input[type="checkbox"] {
+  accent-color: var(--primary);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Ajuste geral das fontes menores */
+.field label,
+.field-row,
+.alt {
+  font-size: 0.82rem; /* um pouco menor que o padrão */
+}
+
+/* Reposiciona o checkbox e o link "Esqueci minha senha" */
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  margin: 8px 0 16px;
+  color: var(--muted);
+}
+
+/* Checkbox estilizado */
+.field-row input[type="checkbox"] {
+  accent-color: var(--primary);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Link "Esqueci minha senha" alinhado à direita */
+.field-row a {
+  color: var(--primary);
+  font-weight: 600;
+  transition: .25s;
+  text-align: right;
+}
+.field-row a:hover {
+  color: var(--accent);
+}
+
+/* Centraliza o texto "Não tem conta? Criar agora" */
+.alt {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.alt a {
+  color: var(--primary);
+  font-weight: 600;
+  transition: .25s;
+}
+.alt a:hover {
+  color: var(--accent);
+}
 
 /* Profile */
 .page{padding:120px 0 60px}
@@ -318,7 +419,7 @@ html[data-theme="dark"] .img-dark{
 }
 
 /* Mobile */
-@media(max-width:880px){
+@media(max-width:880px){}
 
 /* Mobile */
 @media(max-width:880px){
@@ -336,4 +437,10 @@ html[data-theme="dark"] .img-dark{
 }
 @media(max-width:520px){
   .mvv,.team-grid,.stats,.footer-grid{grid-template-columns:1fr}
+}
+
+.field input[type="e-mail"]:focus:invalid{
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3) !important;
 }
