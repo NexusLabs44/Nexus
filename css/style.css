@@ -426,7 +426,7 @@ html[data-theme="dark"] .img-dark{
   .nav-links{
     position:fixed;top:72px;right:0;left:0;background:var(--surface);
     flex-direction:column;padding:24px;gap:18px;border-bottom:1px solid var(--border);
-    transform:translateY(-120%);transition:.35s;
+    transform:translateY(-143%);transition:.35s;
   }
   .nav-links.open{transform:translateY(0)}
   .menu-toggle{display:grid}
