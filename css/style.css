@@ -439,8 +439,3 @@ html[data-theme="dark"] .img-dark{
   .mvv,.team-grid,.stats,.footer-grid{grid-template-columns:1fr}
 }
 
-.field input[type="e-mail"]:focus:invalid{
-  background-color: rgba(239, 68, 68, 0.15) !important;
-  border: 1px solid rgba(239, 68, 68, 0.4) !important;
-  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3) !important;
-}
