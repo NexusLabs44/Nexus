@@ -1,4 +1,4 @@
-/* ECONEXOS — JS */
+/* ECONEXUS — JS */
 (function(){
   // Theme
   const root=document.documentElement;
@@ -71,28 +71,259 @@ function handleLogin(e){
 }
 
 /* ===== CALCULATOR ===== */
-function calcCarbon(e){
+
+let selectedProfile = 'fisica';
+
+
+function selectProfile(type) {
+
+  selectedProfile = type;
+
+  const formFisica = document.getElementById('formFisica');
+  const formJuridica = document.getElementById('formJuridica');
+
+  const btnFisica = document.getElementById('btnFisica');
+  const btnJuridica = document.getElementById('btnJuridica');
+
+
+  if (type === 'fisica') {
+
+    formFisica.style.display = 'block';
+    formJuridica.style.display = 'none';
+
+    btnFisica.classList.add('active');
+    btnJuridica.classList.remove('active');
+
+    setFieldsDisabled(formFisica, false);
+    setFieldsDisabled(formJuridica, true);
+
+  } else {
+
+    formFisica.style.display = 'none';
+    formJuridica.style.display = 'block';
+
+    btnFisica.classList.remove('active');
+    btnJuridica.classList.add('active');
+
+    setFieldsDisabled(formFisica, true);
+    setFieldsDisabled(formJuridica, false);
+
+  }
+}
+
+
+function setFieldsDisabled(container, disabled) {
+
+  container.querySelectorAll('input').forEach(input => {
+    input.disabled = disabled;
+    input.required = !disabled;
+  });
+
+}
+
+
+function calcCarbon(e) {
+
   e.preventDefault();
-  const f=e.target;
-  const energia=+f.energia.value||0;     // kWh/mês -> 0.0817 kg CO2/kWh (BR)
-  const transporte=+f.transporte.value||0; // km/semana carro -> 0.21 kg/km
-  const combustivel=+f.combustivel.value||0; // L/mês -> 2.31 kg/L
-  const viagens=+f.viagens.value||0;     // h/ano avião -> 90 kg/h
-  const agua=+f.agua.value||0;           // L/dia -> 0.000298 kg/L
-  const residuos=+f.residuos.value||0;   // kg/semana -> 2.5 kg CO2/kg
-  const total=
-    energia*0.0817*12 +
-    transporte*0.21*52 +
-    combustivel*2.31*12 +
-    viagens*90 +
-    agua*0.000298*365 +
-    residuos*2.5*52;
-  const breakdown={energia:energia*0.0817*12,transporte:transporte*0.21*52,combustivel:combustivel*2.31*12,viagens:viagens*90,agua:agua*0.000298*365,residuos:residuos*2.5*52};
-  const result={total:Math.round(total),breakdown,date:new Date().toISOString()};
-  // history
-  const hist=JSON.parse(localStorage.getItem('econexos-history')||'[]');
-  hist.unshift(result);localStorage.setItem('econexos-history',JSON.stringify(hist.slice(0,20)));
-  localStorage.setItem('econexos-last',JSON.stringify(result));
-  location.href='resultados.html';
-  return false;
+
+  const f = e.target;
+
+
+  /* ==================== */
+  /* PESSOA FÍSICA */
+  /* ==================== */
+
+  if (selectedProfile === 'fisica') {
+
+    const energia = +f.energia.value || 0;
+    const transporte = +f.transporte.value || 0;
+    const combustivel = +f.combustivel.value || 0;
+    const viagens = +f.viagens.value || 0;
+    const agua = +f.agua.value || 0;
+    const residuos = +f.residuos.value || 0;
+
+
+    const total =
+      energia * 0.0817 * 12 +
+      transporte * 0.21 * 52 +
+      combustivel * 2.31 * 12 +
+      viagens * 90 +
+      agua * 0.000298 * 365 +
+      residuos * 2.5 * 52;
+
+
+    const breakdown = {
+
+      energia: energia * 0.0817 * 12,
+
+      transporte: transporte * 0.21 * 52,
+
+      combustivel: combustivel * 2.31 * 12,
+
+      viagens: viagens * 90,
+
+      agua: agua * 0.000298 * 365,
+
+      residuos: residuos * 2.5 * 52
+
+    };
+
+
+    const result = {
+
+      tipo: 'fisica',
+
+      total: Math.round(total),
+
+      breakdown,
+
+      date: new Date().toISOString()
+
+    };
+
+
+    saveCarbonResult(result);
+
+    return false;
+
+  }
+
+
+  /* ==================== */
+  /* PESSOA JURÍDICA */
+  /* ==================== */
+
+  if (selectedProfile === 'juridica') {
+
+    const empresa = f.empresa.value.trim();
+
+    const funcionarios = +f.funcionarios.value || 0;
+
+    const energia = +f.energiaPJ.value || 0;
+
+    const gasolina = +f.gasolinaPJ.value || 0;
+
+    const diesel = +f.dieselPJ.value || 0;
+
+    const transporte = +f.transportePJ.value || 0;
+
+    const viagens = +f.viagensPJ.value || 0;
+
+    const residuos = +f.residuosPJ.value || 0;
+
+
+    /*
+      ATENÇÃO:
+
+      Estes fatores são provisórios nesta primeira versão.
+      Antes da versão final da Nexus, vamos validar cada fator
+      com uma fonte/metodologia adequada ao projeto.
+    */
+
+
+    const energiaCO2 =
+      energia * 0.0817 * 12;
+
+
+    const gasolinaCO2 =
+      gasolina * 2.31 * 12;
+
+
+    const dieselCO2 =
+      diesel * 2.68 * 12;
+
+
+    const transporteCO2 =
+      transporte * 0.21 * 12;
+
+
+    const viagensCO2 =
+      viagens * 90;
+
+
+    const residuosCO2 =
+      residuos * 2.5 * 52;
+
+
+    const total =
+      energiaCO2 +
+      gasolinaCO2 +
+      dieselCO2 +
+      transporteCO2 +
+      viagensCO2 +
+      residuosCO2;
+
+
+    const breakdown = {
+
+      energia: energiaCO2,
+
+      combustivel: gasolinaCO2 + dieselCO2,
+
+      transporte: transporteCO2,
+
+      viagens: viagensCO2,
+
+      residuos: residuosCO2
+
+    };
+
+
+    const result = {
+
+      tipo: 'juridica',
+
+      empresa,
+
+      funcionarios,
+
+      total: Math.round(total),
+
+      breakdown,
+
+      date: new Date().toISOString()
+
+    };
+
+
+    saveCarbonResult(result);
+
+    return false;
+
+  }
+
+}
+
+
+function saveCarbonResult(result) {
+
+  /* Histórico */
+
+  const hist =
+    JSON.parse(
+      localStorage.getItem('econexos-history') || '[]'
+    );
+
+
+  hist.unshift(result);
+
+
+  localStorage.setItem(
+    'econexos-history',
+    JSON.stringify(hist.slice(0, 20))
+  );
+
+
+  /* Último resultado */
+
+  localStorage.setItem(
+    'econexos-last',
+    JSON.stringify(result)
+  );
+
+
+  /* Ir para resultados */
+
+  location.href = 'resultados.html';
+
 }
