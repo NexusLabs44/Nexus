@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <link
+    rel="icon"
+    type="image/x-icon"
+    href="images/N - logo 1.png"
+  >
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Meu perfil — ECONEXUS</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+  <style>
+
+    /* =========================
+       DASHBOARD
+       ========================= */
+
+    .dashboard-header {
+      margin-bottom: 28px;
+    }
+
+    .dashboard-header h2 {
+      margin-bottom: 6px;
+    }
+
+    .dashboard-header p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+
+    /* =========================
+       CARDS
+       ========================= */
+
+    .dashboard-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .dashboard-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dashboard-stat-icon {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .dashboard-stat-value {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .dashboard-stat-label {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-top: 6px;
+    }
+
+
+    /* =========================
+       DASHBOARD GRID
+       ========================= */
+
+    .dashboard-content {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .dashboard-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .dashboard-panel h3 {
+      margin: 0 0 6px;
+    }
+
+    .panel-subtitle {
+      color: var(--muted);
+      font-size: .85rem;
+      margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       GRÁFICO
+       ========================= */
+
+    .evolution-chart {
+      height: 240px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      padding: 20px 10px 10px;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .chart-column {
+      min-width: 42px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .chart-value {
+      font-size: .68rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .chart-bar {
+      width: 28px;
+      min-height: 8px;
+      border-radius: 8px 8px 3px 3px;
+      background: linear-gradient(
+        180deg,
+        #10b981,
+        #0ea5e9
+      );
+      transition: height .5s ease;
+    }
+
+    .chart-date {
+      font-size: .68rem;
+      color: var(--muted);
+    }
+
+    .chart-empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-align: center;
+    }
+
+
+    /* =========================
+       DISTRIBUIÇÃO
+       ========================= */
+
+    .distribution-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .distribution-item {
+      display: grid;
+      grid-template-columns: 90px 1fr 55px;
+      align-items: center;
+      gap: 10px;
+      font-size: .85rem;
+    }
+
+    .distribution-name {
+      color: var(--text);
+    }
+
+    .distribution-track {
+      height: 8px;
+      background: var(--surface-2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .distribution-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(
+        90deg,
+        #10b981,
+        #0ea5e9
+      );
+    }
+
+    .distribution-percent {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .distribution-empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 35px 10px;
+    }
+
+
+    /* =========================
+       TENDÊNCIA
+       ========================= */
+
+    .trend-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trend-icon {
+      font-size: 1.5rem;
+    }
+
+    .trend-text strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .trend-text span {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+
+    /* =========================
+       HISTÓRICO
+       ========================= */
+
+    .history-panel {
+      margin-top: 28px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .history-dashboard-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .history-dashboard-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-main strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .history-main small {
+      color: var(--muted);
+    }
+
+    .history-type {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+
+    /* =========================
+       RESPONSIVO
+       ========================= */
+
+    @media (max-width: 1000px) {
+
+      .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-content {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+      .dashboard-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .distribution-item {
+        grid-template-columns: 80px 1fr 45px;
+      }
+
+      .history-dashboard-item {
+        align-items: flex-start;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+  <div class="container nav">
+
+    <img
+      src="images/N - logo 1.png"
+      width="80"
+      alt="ECONEXUS"
+    >
+
+
+    <nav class="nav-links">
+
+      <a href="index.html">
+        Início
+      </a>
+
+      <a href="calculadora.html">
+        Calculadora
+      </a>
+
+      <a href="resultados.html">
+        Resultados
+      </a>
+
+      <a href="login.html">
+        Sair
+      </a>
+
+    </nav>
+
+
+    <div class="nav-actions">
+
+      <button
+        class="icon-btn"
+        onclick="toggleTheme()"
+      >
+
+        <span class="theme-icon">
+          🌙
+        </span>
+
+      </button>
+
+
+      <button
+        class="icon-btn menu-toggle"
+        onclick="toggleMenu()"
+      >
+        ☰
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+
+<main class="page">
+
+  <div class="container">
+
+
+    <div class="profile-grid">
+
+
+      <!-- =========================
+           PERFIL
+           ========================= -->
+
+      <aside class="profile-card reveal in">
+
+        <div
+          class="avatar"
+          id="avatar"
+        >
+          U
+        </div>
+
+
+        <h3 id="uname">
+          Usuário
+        </h3>
+
+
+        <div
+          class="email"
+          id="uemail"
+        >
+          email@econexos.com
+        </div>
+
+
+        <button
+          class="btn btn-primary btn-block"
+          type="button"
+        >
+          Editar perfil
+        </button>
+
+
+        <div
+          class="progress-wrap"
+          style="text-align:left"
+        >
+
+          <div
+            style="
+              display:flex;
+              justify-content:space-between;
+              font-size:.85rem
+            "
+          >
+
+            <span>
+              Progresso ecológico
+            </span>
+
+            <span id="pPct">
+              0%
+            </span>
+
+          </div>
+
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              id="pFill"
+              style="width:0"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+
+
+      <!-- =========================
+           DASHBOARD
+           ========================= -->
+
+      <div>
+
+
+        <div class="dashboard-header">
+
+          <h2>
+            Meu Dashboard 🌱
+          </h2>
+
+          <p>
+            Acompanhe sua evolução e sua pegada de carbono.
+          </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             CARDS
+             ========================= -->
+
+        <div class="dashboard-stats">
+
+
+          <div class="dashboard-stat">
+
+            <div class="dashboard-stat-icon">
+              🌱
+            </div>
+
+            <div
+              class="dashboard-stat-value"
+              id="sTotal"
+            >
+              0
+            </div>
+
+            <div class="dashboard-stat-label">
+              Última pegada (kg CO₂)
+            </div>
+
+          </div>
+
+
+
+          <div class="dashboard-stat">
+
+            <div class="dashboard-stat-icon">
+              📊
+            </div>
+
+            <div
+              class="dashboard-stat-value"
+              id="sAverage"
+            >
+              0
+            </div>
+
+            <div class="dashboard-stat-label">
+              Média dos cálculos
+            </div>
+
+          </div>
+
+
+
+          <div class="dashboard-stat">
+
+            <div class="dashboard-stat-icon">
+              🧮
+            </div>
+
+            <div
+              class="dashboard-stat-value"
+              id="sCount"
+            >
+              0
+            </div>
+
+            <div class="dashboard-stat-label">
+              Cálculos realizados
+            </div>
+
+          </div>
+
+
+
+          <div class="dashboard-stat">
+
+            <div class="dashboard-stat-icon">
+              📈
+            </div>
+
+            <div
+              class="dashboard-stat-value"
+              id="sTrend"
+            >
+              —
+            </div>
+
+            <div class="dashboard-stat-label">
+              Tendência
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             GRÁFICO + DISTRIBUIÇÃO
+             ========================= -->
+
+        <div class="dashboard-content">
+
+
+          <div class="dashboard-panel">
+
+            <h3>
+              Evolução da sua pegada
+            </h3>
+
+            <div class="panel-subtitle">
+              Compare seus cálculos ao longo do tempo.
+            </div>
+
+
+            <div
+              class="evolution-chart"
+              id="evolutionChart"
+            >
+
+              <div class="chart-empty">
+                Faça seu primeiro cálculo para começar a acompanhar sua evolução.
+              </div>
+
+            </div>
+
+
+            <div
+              class="trend-box"
+              id="trendBox"
+            >
+
+              <div class="trend-icon">
+                🌱
+              </div>
+
+              <div class="trend-text">
+
+                <strong>
+                  Comece seu acompanhamento
+                </strong>
+
+                <span>
+                  Seus próximos cálculos aparecerão aqui.
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="dashboard-panel">
+
+            <h3>
+              Distribuição
+            </h3>
+
+            <div class="panel-subtitle">
+              Principais fontes do seu último cálculo.
+            </div>
+
+
+            <div
+              class="distribution-list"
+              id="distribution"
+            >
+
+              <div class="distribution-empty">
+                Nenhum cálculo realizado ainda.
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             HISTÓRICO
+             ========================= -->
+
+        <div class="dashboard-panel history-panel">
+
+          <h3>
+            Histórico de cálculos
+          </h3>
+
+          <div class="panel-subtitle">
+            Seus últimos registros no ECONEXUS.
+          </div>
+
+
+          <div
+            class="history-list"
+            id="history"
+          >
+
+            <div class="history-dashboard-item">
+
+              <div class="history-main">
+
+                <strong>
+                  Sem cálculos ainda
+                </strong>
+
+                <small>
+                  Faça seu primeiro cálculo para começar.
+                </small>
+
+              </div>
+
+
+              <a
+                href="calculadora.html"
+                class="btn btn-ghost"
+              >
+                Calcular
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<script src="js/script.js"></script>
+
+
+<script>
+
+(function () {
+
+
+  /* =========================
+     USUÁRIO
+     ========================= */
+
+  const u = JSON.parse(
+    localStorage.getItem('econexos-user') ||
+    '{"name":"Visitante","email":"convidado@econexos.com"}'
+  );
+
+
+  document.getElementById('uname').textContent =
+    u.name;
+
+
+  document.getElementById('uemail').textContent =
+    u.email;
+
+
+  document.getElementById('avatar').textContent =
+    (u.name[0] || 'U').toUpperCase();
+
+
+
+  /* =========================
+     HISTÓRICO
+     ========================= */
+
+  const h = JSON.parse(
+    localStorage.getItem('econexos-history') ||
+    '[]'
+  );
+
+
+  if (!h.length) {
+
+    document.getElementById('pPct').textContent =
+      '0%';
+
+    document.getElementById('pFill').style.width =
+      '0%';
+
+    return;
+
+  }
+
+
+
+  /* =========================
+     CARDS
+     ========================= */
+
+  document.getElementById('sCount').textContent =
+    h.length;
+
+
+  const totalAtual =
+    Number(h[0].total) || 0;
+
+
+  document.getElementById('sTotal').textContent =
+    totalAtual.toLocaleString('pt-BR');
+
+
+
+  /* =========================
+     PROGRESSO ECOLÓGICO
+     ========================= */
+
+  const progressFill =
+    document.getElementById('pFill');
+
+  const progressPercent =
+    document.getElementById('pPct');
+
+
+  let progress = 100;
+
+
+  if (totalAtual > 8000) {
+
+    progress = 20;
+
+  } else if (totalAtual > 6000) {
+
+    progress = 40;
+
+  } else if (totalAtual > 4000) {
+
+    progress = 60;
+
+  } else if (totalAtual > 2000) {
+
+    progress = 80;
+
+  }
+
+
+  progressPercent.textContent =
+    progress + '%';
+
+
+  setTimeout(() => {
+
+    progressFill.style.width =
+      progress + '%';
+
+  }, 200);
+
+
+
+  /* =========================
+     MÉDIA
+     ========================= */
+
+  const soma =
+    h.reduce(
+      (acc, item) =>
+        acc + (Number(item.total) || 0),
+      0
+    );
+
+
+  const media =
+    soma / h.length;
+
+
+  document.getElementById('sAverage').textContent =
+    Math.round(media).toLocaleString('pt-BR');
+
+
+
+  /* =========================
+     TENDÊNCIA
+     ========================= */
+
+  const trendValue =
+    document.getElementById('sTrend');
+
+
+  const trendBox =
+    document.getElementById('trendBox');
+
+
+  if (h.length >= 2) {
+
+    const atual =
+      Number(h[0].total) || 0;
+
+    const anterior =
+      Number(h[1].total) || 0;
+
+
+    const diferenca =
+      atual - anterior;
+
+
+    if (diferenca < 0) {
+
+      const percentual =
+        Math.abs(
+          (diferenca / anterior) * 100
+        );
+
+
+      trendValue.textContent =
+        '↓ ' +
+        percentual.toFixed(1) +
+        '%';
+
+
+      trendBox.innerHTML = `
+
+        <div class="trend-icon">
+          🌱
+        </div>
+
+        <div class="trend-text">
+
+          <strong>
+            Sua pegada diminuiu
+          </strong>
+
+          <span>
+            Você emitiu ${percentual.toFixed(1)}% menos CO₂ no último cálculo.
+          </span>
+
+        </div>
+
+      `;
+
+    } else if (diferenca > 0) {
+
+      const percentual =
+        (diferenca / anterior) * 100;
+
+
+      trendValue.textContent =
+        '↑ ' +
+        percentual.toFixed(1) +
+        '%';
+
+
+      trendBox.innerHTML = `
+
+        <div class="trend-icon">
+          📈
+        </div>
+
+        <div class="trend-text">
+
+          <strong>
+            Sua pegada aumentou
+          </strong>
+
+          <span>
+            Seu último cálculo apresentou aumento de ${percentual.toFixed(1)}% nas emissões.
+          </span>
+
+        </div>
+
+      `;
+
+    } else {
+
+      trendValue.textContent =
+        '0%';
+
+
+      trendBox.innerHTML = `
+
+        <div class="trend-icon">
+          ➖
+        </div>
+
+        <div class="trend-text">
+
+          <strong>
+            Sua pegada se manteve estável
+          </strong>
+
+          <span>
+            O último cálculo apresentou o mesmo resultado do anterior.
+          </span>
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+
+  /* =========================
+     GRÁFICO DE EVOLUÇÃO
+     ========================= */
+
+  const chart =
+    document.getElementById('evolutionChart');
+
+
+  const chartData =
+    h.slice(0, 8).reverse();
+
+
+  const maxChart =
+    Math.max(
+      ...chartData.map(
+        item => Number(item.total) || 0
+      )
+    ) || 1;
+
+
+  chart.innerHTML =
+    chartData.map((item, index) => {
+
+      const valor =
+        Number(item.total) || 0;
+
+
+      const altura =
+        Math.max(
+          8,
+          (valor / maxChart) * 100
+        );
+
+
+      const data =
+        item.date
+          ? new Date(item.date)
+              .toLocaleDateString(
+                'pt-BR',
+                {
+                  day: '2-digit',
+                  month: '2-digit'
+                }
+              )
+          : `#${index + 1}`;
+
+
+      return `
+
+        <div class="chart-column">
+
+          <span class="chart-value">
+            ${valor.toLocaleString('pt-BR')}
+          </span>
+
+          <div
+            class="chart-bar"
+            style="height:${altura}%"
+          ></div>
+
+          <span class="chart-date">
+            ${data}
+          </span>
+
+        </div>
+
+      `;
+
+    }).join('');
+
+
+
+  /* =========================
+     DISTRIBUIÇÃO
+     ========================= */
+
+  const distribution =
+    document.getElementById('distribution');
+
+
+  const latest =
+    h[0];
+
+
+  const breakdown =
+    latest.breakdown || {};
+
+
+  const isPJ =
+    latest.tipo === 'juridica' ||
+    latest.tipo === 'pj';
+
+
+  const labelsPF = {
+
+    energia: 'Energia',
+
+    transporte: 'Transporte',
+
+    combustivel: 'Combustível',
+
+    viagens: 'Viagens',
+
+    agua: 'Água',
+
+    residuos: 'Resíduos'
+
+  };
+
+
+  const labelsPJ = {
+
+    energia: 'Energia',
+
+    combustivel: 'Combustível',
+
+    transporte: 'Frota',
+
+    viagens: 'Viagens',
+
+    residuos: 'Resíduos'
+
+  };
+
+
+  const labels =
+    isPJ
+      ? labelsPJ
+      : labelsPF;
+
+
+  const entries =
+    Object.entries(breakdown);
+
+
+  const totalBreakdown =
+    entries.reduce(
+      (sum, [, value]) =>
+        sum + (Number(value) || 0),
+      0
+    );
+
+
+  if (entries.length && totalBreakdown > 0) {
+
+    const ordered =
+      entries
+        .sort(
+          ([, a], [, b]) =>
+            Number(b) - Number(a)
+        )
+        .slice(0, 6);
+
+
+    distribution.innerHTML =
+      ordered.map(([key, value]) => {
+
+        const percentual =
+          ((Number(value) || 0) /
+            totalBreakdown) * 100;
+
+
+        return `
+
+          <div class="distribution-item">
+
+            <span class="distribution-name">
+              ${labels[key] || key}
+            </span>
+
+            <div class="distribution-track">
+
+              <div
+                class="distribution-fill"
+                style="width:${percentual}%"
+              ></div>
+
+            </div>
+
+            <span class="distribution-percent">
+              ${Math.round(percentual)}%
+            </span>
+
+          </div>
+
+        `;
+
+      }).join('');
+
+  }
+
+
+
+  /* =========================
+     HISTÓRICO
+     ========================= */
+
+  document.getElementById('history').innerHTML =
+    h.slice(0, 8).map(item => {
+
+      const total =
+        Number(item.total) || 0;
+
+
+      let levelClass =
+        'lvl-low';
+
+      let levelText =
+        'Baixo';
+
+
+      if (total > 6000) {
+
+        levelClass =
+          'lvl-high';
+
+        levelText =
+          'Alto';
+
+      } else if (total > 2000) {
+
+        levelClass =
+          'lvl-med';
+
+        levelText =
+          'Médio';
+
+      }
+
+
+      const data =
+        item.date
+          ? new Date(item.date)
+              .toLocaleDateString('pt-BR')
+          : 'Data não disponível';
+
+
+      const tipo =
+        item.tipo === 'juridica' ||
+        item.tipo === 'pj'
+          ? 'Pessoa Jurídica'
+          : 'Pessoa Física';
+
+
+      return `
+
+        <div class="history-dashboard-item">
+
+          <div class="history-main">
+
+            <strong>
+              ${total.toLocaleString('pt-BR')} kg CO₂
+            </strong>
+
+            <small>
+              ${data}
+            </small>
+
+          </div>
+
+
+          <span class="history-type">
+            ${tipo}
+          </span>
+
+
+          <span class="level ${levelClass}">
+            ${levelText}
+          </span>
+
+        </div>
+
+      `;
+
+    }).join('');
+
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
