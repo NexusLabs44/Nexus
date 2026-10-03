@@ -7,7 +7,7 @@ from accounts.views import (
     logout_view,
     register_view,
 )
-
+       
 from calculations.views import (
     calculator_view,
     home_view,
