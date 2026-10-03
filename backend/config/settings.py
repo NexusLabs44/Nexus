@@ -14,7 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SEGURANÇA
 # ============================================================
 
-SECRET_KEY = config("DJANGO_SECRET_KEY")
+SECRET_KEY = config(
+    "DJANGO_SECRET_KEY"
+)
 
 DEBUG = config(
     "DJANGO_DEBUG",
@@ -41,6 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # CORS
+    "corsheaders",
+
     # Aplicações do projeto
     "accounts",
     "calculations",
@@ -53,6 +58,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
+    # Deve ficar antes do CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
 
     "django.middleware.common.CommonMiddleware",
@@ -60,6 +69,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
 
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+
     "django.contrib.messages.middleware.MessageMiddleware",
 
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -111,13 +121,21 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
 
-        "NAME": config("DB_NAME"),
+        "NAME": config(
+            "DB_NAME"
+        ),
 
-        "USER": config("DB_USER"),
+        "USER": config(
+            "DB_USER"
+        ),
 
-        "PASSWORD": config("DB_PASSWORD"),
+        "PASSWORD": config(
+            "DB_PASSWORD"
+        ),
 
-        "HOST": config("DB_HOST"),
+        "HOST": config(
+            "DB_HOST"
+        ),
 
         "PORT": config(
             "DB_PORT",
@@ -212,39 +230,31 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ============================================================
 # CORS
 # ============================================================
-# Desenvolvimento:
-# http://localhost:5173
-#
-# Produção:
-# coloque aqui o domínio definitivo do seu frontend.
-#
-# Exemplo:
-# https://nexus.vercel.app
-# ============================================================
 
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
-    default="http://localhost:5173",
+    default=(
+        "http://localhost:5173,"
+        "http://127.0.0.1:5173,"
+        "https://nexus-frontend-murex-two.vercel.app"
+    ),
     cast=Csv(),
 )
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # ============================================================
 # CSRF
 # ============================================================
-# Necessário quando o frontend estiver fazendo requisições
-# protegidas para o Django.
-#
-# No Render, você pode configurar:
-#
-# CSRF_TRUSTED_ORIGINS=
-# https://seu-frontend.vercel.app
-#
-# ============================================================
 
 CSRF_TRUSTED_ORIGINS = config(
     "CSRF_TRUSTED_ORIGINS",
-    default="http://localhost:5173",
+    default=(
+        "http://localhost:5173,"
+        "http://127.0.0.1:5173,"
+        "https://nexus-frontend-murex-two.vercel.app"
+    ),
     cast=Csv(),
 )
 
@@ -265,4 +275,9 @@ SECURE_PROXY_SSL_HEADER = (
 
 SESSION_COOKIE_SECURE = not DEBUG
 
+SESSION_COOKIE_SAMESITE = "None"
+
 CSRF_COOKIE_SECURE = not DEBUG
+
+CSRF_COOKIE_SAMESITE = "None"
+
