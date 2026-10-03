@@ -1,40 +1,686 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<link rel="icon" type="image/x-icon" href="/assets/images/favicon.png">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cadastro — ECONEXUS</title>
-<link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-<header class="header">
-  <div class="container nav">
-      <img src="/assets/images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+  <head>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.png" />
 
-    <div class="nav-actions">
-      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
-      <a href="/login/" class="btn btn-ghost">Entrar</a>
-    </div>
-  </div>
-</header>
+    <meta charset="UTF-8" />
 
-<main class="auth-wrap">
-  <div class="auth-card reveal in">
-      <img src="/assets/images/econexus.png" width="180px" alt="logo econexus" style="margin: 0 auto; display: block;" />
-    <p class="sub">Comece a medir e reduzir seu impacto hoje</p>
-    <div id="msg" class="msg">{{ form.non_field_errors }}</div>
-    <form method="post" novalidate>
-      {% csrf_token %}
-      <div class="field"><label for="id_name">Nome completo</label>{{ form.name }}{{ form.name.errors }}</div>
-      <div class="field"><label for="id_email">E-mail</label>{{ form.email }}{{ form.email.errors }}</div>
-      <div class="field"><label for="id_phone">Telefone</label>{{ form.phone }}{{ form.phone.errors }}</div>
-      <div class="field"><label for="id_password1">Senha</label>{{ form.password1 }}{{ form.password1.errors }}</div>
-      <div class="field"><label for="id_password2">Confirmar senha</label>{{ form.password2 }}{{ form.password2.errors }}</div>
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Criar conta</button>
-    </form>
-    <p class="alt">Já tem uma conta? <a href="/login/">Entrar</a></p>
-  </div>
-</main>
-<script src="/assets/js/script.js"></script>
-</body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cadastro — ECONEXUS</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+    <style>
+      /* =========================================================
+       MENSAGEM
+       ========================================================= */
+
+      .msg {
+        display: none;
+        margin-bottom: 18px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .msg.show {
+        display: block;
+      }
+
+      .msg.error {
+        color: #dc2626;
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .msg.success {
+        color: #059669;
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+
+      /* =========================================================
+       ERRO DOS CAMPOS
+       ========================================================= */
+
+      .field-error {
+        display: none;
+        color: #dc2626;
+        font-size: 0.78rem;
+        margin-top: 6px;
+      }
+
+      .field-error.show {
+        display: block;
+      }
+
+      /* =========================================================
+       INPUT
+       ========================================================= */
+
+      .field input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* =========================================================
+       ESTADO DO BOTÃO
+       ========================================================= */
+
+      .btn-loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+    <header class="header">
+      <div class="container nav">
+        <a href="/" aria-label="ECONEXUS">
+          <img src="/assets/images/N - logo 1.png" width="80" alt="ECONEXUS" />
+        </a>
+
+        <div class="nav-actions">
+          <button
+            class="icon-btn"
+            type="button"
+            onclick="toggleTheme()"
+            aria-label="Alterar tema"
+          >
+            <span class="theme-icon"> 🌙 </span>
+          </button>
+
+          <a href="/login/" class="btn btn-ghost"> Entrar </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- =========================================================
+     CADASTRO
+     ========================================================= -->
+
+    <main class="auth-wrap">
+      <div class="auth-card reveal in">
+        <!-- LOGO -->
+
+        <img
+          src="/assets/images/econexus.png"
+          width="180"
+          alt="Logo ECONEXUS"
+          style="margin: 0 auto; display: block"
+        />
+
+        <p class="sub">Comece a medir e reduzir seu impacto hoje</p>
+
+        <!-- =====================================================
+         MENSAGEM GLOBAL
+         ===================================================== -->
+
+        <div id="msg" class="msg" role="alert" aria-live="polite"></div>
+
+        <!-- =====================================================
+         FORMULÁRIO
+         ===================================================== -->
+
+        <form id="registerForm" novalidate>
+          <!-- NOME -->
+
+          <div class="field">
+            <label for="name"> Nome completo </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Seu nome completo"
+              required
+            />
+
+            <div id="nameError" class="field-error"></div>
+          </div>
+
+          <!-- E-MAIL -->
+
+          <div class="field">
+            <label for="email"> E-mail </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="seu@email.com"
+              required
+            />
+
+            <div id="emailError" class="field-error"></div>
+          </div>
+
+          <!-- TELEFONE -->
+
+          <div class="field">
+            <label for="phone"> Telefone </label>
+
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              placeholder="(00) 00000-0000"
+              maxlength="15"
+              required
+            />
+
+            <div id="phoneError" class="field-error"></div>
+          </div>
+
+          <!-- SENHA -->
+
+          <div class="field">
+            <label for="password1"> Senha </label>
+
+            <input
+              id="password1"
+              name="password1"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Crie uma senha"
+              minlength="8"
+              required
+            />
+
+            <div id="password1Error" class="field-error"></div>
+          </div>
+
+          <!-- CONFIRMAR SENHA -->
+
+          <div class="field">
+            <label for="password2"> Confirmar senha </label>
+
+            <input
+              id="password2"
+              name="password2"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Digite a senha novamente"
+              minlength="8"
+              required
+            />
+
+            <div id="password2Error" class="field-error"></div>
+          </div>
+
+          <!-- BOTÃO -->
+
+          <button
+            id="registerButton"
+            class="btn btn-primary btn-lg btn-block"
+            type="submit"
+          >
+            Criar conta
+          </button>
+        </form>
+
+        <!-- LOGIN -->
+
+        <p class="alt">
+          Já tem uma conta?
+
+          <a href="/login/"> Entrar </a>
+        </p>
+      </div>
+    </main>
+
+    <!-- =========================================================
+     SCRIPT PRINCIPAL
+     ========================================================= -->
+
+    <script src="/assets/js/script.js"></script>
+
+    <!-- =========================================================
+     CADASTRO API
+     ========================================================= -->
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* =========================================================
+     API
+     ========================================================= */
+
+        const API_URL =
+          window.ECONEXUS_API_URL || "https://nexus-ykvd.onrender.com";
+
+        /* =========================================================
+     ELEMENTOS
+     ========================================================= */
+
+        const form = document.getElementById("registerForm");
+
+        const button = document.getElementById("registerButton");
+
+        const msg = document.getElementById("msg");
+
+        const nameInput = document.getElementById("name");
+
+        const emailInput = document.getElementById("email");
+
+        const phoneInput = document.getElementById("phone");
+
+        const password1Input = document.getElementById("password1");
+
+        const password2Input = document.getElementById("password2");
+
+        /* =========================================================
+     MENSAGEM
+     ========================================================= */
+
+        function showMessage(message, type = "error") {
+          msg.textContent = message;
+
+          msg.className = `msg show ${type}`;
+        }
+
+        function clearMessage() {
+          msg.textContent = "";
+
+          msg.className = "msg";
+        }
+
+        /* =========================================================
+     ERROS
+     ========================================================= */
+
+        function setFieldError(id, message) {
+          const element = document.getElementById(id);
+
+          if (!element) {
+            return;
+          }
+
+          element.textContent = message || "";
+
+          element.classList.toggle("show", Boolean(message));
+        }
+
+        function clearFieldErrors() {
+          setFieldError("nameError", "");
+
+          setFieldError("emailError", "");
+
+          setFieldError("phoneError", "");
+
+          setFieldError("password1Error", "");
+
+          setFieldError("password2Error", "");
+        }
+
+        /* =========================================================
+     TELEFONE
+     ========================================================= */
+
+        function formatPhone(value) {
+          let numbers = value.replace(/\D/g, "");
+
+          numbers = numbers.substring(0, 11);
+
+          if (numbers.length <= 2) {
+            return numbers;
+          }
+
+          if (numbers.length <= 7) {
+            return "(" + numbers.substring(0, 2) + ") " + numbers.substring(2);
+          }
+
+          return (
+            "(" +
+            numbers.substring(0, 2) +
+            ") " +
+            numbers.substring(2, 7) +
+            "-" +
+            numbers.substring(7)
+          );
+        }
+
+        phoneInput.addEventListener("input", function () {
+          this.value = formatPhone(this.value);
+        });
+
+        /* =========================================================
+     VALIDAÇÃO
+     ========================================================= */
+
+        function validateForm() {
+          clearFieldErrors();
+
+          clearMessage();
+
+          const name = nameInput.value.trim();
+
+          const email = emailInput.value.trim();
+
+          const phone = phoneInput.value.trim();
+
+          const password1 = password1Input.value;
+
+          const password2 = password2Input.value;
+
+          let valid = true;
+
+          /* NOME */
+
+          if (!name) {
+            setFieldError("nameError", "Informe seu nome completo.");
+
+            valid = false;
+          } else if (name.length < 3) {
+            setFieldError(
+              "nameError",
+              "O nome deve possuir pelo menos 3 caracteres.",
+            );
+
+            valid = false;
+          }
+
+          /* EMAIL */
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (!email) {
+            setFieldError("emailError", "Informe seu e-mail.");
+
+            valid = false;
+          } else if (!emailRegex.test(email)) {
+            setFieldError("emailError", "Digite um e-mail válido.");
+
+            valid = false;
+          }
+
+          /* TELEFONE */
+
+          const phoneNumbers = phone.replace(/\D/g, "");
+
+          if (!phone) {
+            setFieldError("phoneError", "Informe seu telefone.");
+
+            valid = false;
+          } else if (phoneNumbers.length < 10) {
+            setFieldError("phoneError", "Informe um telefone válido.");
+
+            valid = false;
+          }
+
+          /* SENHA */
+
+          if (!password1) {
+            setFieldError("password1Error", "Informe uma senha.");
+
+            valid = false;
+          } else if (password1.length < 8) {
+            setFieldError(
+              "password1Error",
+              "A senha deve possuir pelo menos 8 caracteres.",
+            );
+
+            valid = false;
+          }
+
+          /* CONFIRMAÇÃO */
+
+          if (!password2) {
+            setFieldError("password2Error", "Confirme sua senha.");
+
+            valid = false;
+          } else if (password1 !== password2) {
+            setFieldError("password2Error", "As senhas não coincidem.");
+
+            valid = false;
+          }
+
+          return valid;
+        }
+
+        /* =========================================================
+     EXTRAIR MENSAGEM DA API
+     ========================================================= */
+
+        function getApiErrorMessage(data) {
+          if (!data) {
+            return "Não foi possível criar sua conta.";
+          }
+
+          if (typeof data.error === "string") {
+            return data.error;
+          }
+
+          if (typeof data.message === "string") {
+            return data.message;
+          }
+
+          if (typeof data.detail === "string") {
+            return data.detail;
+          }
+
+          /*
+           * Erros vindos do Django
+           */
+
+          const errors = [];
+
+          const fields = [
+            "name",
+            "email",
+            "phone",
+            "password",
+            "password1",
+            "password2",
+          ];
+
+          fields.forEach(function (field) {
+            const value = data[field];
+
+            if (!value) {
+              return;
+            }
+
+            if (Array.isArray(value)) {
+              value.forEach(function (message) {
+                errors.push(String(message));
+              });
+            } else {
+              errors.push(String(value));
+            }
+          });
+
+          if (errors.length) {
+            return errors.join(" ");
+          }
+
+          return "Não foi possível criar sua conta.";
+        }
+
+        /* =========================================================
+     MAPEAR ERROS DA API
+     ========================================================= */
+
+        function applyApiFieldErrors(data) {
+          if (!data) {
+            return;
+          }
+
+          const mapping = {
+            name: "nameError",
+
+            email: "emailError",
+
+            phone: "phoneError",
+
+            password: "password1Error",
+
+            password1: "password1Error",
+
+            password2: "password2Error",
+          };
+
+          Object.keys(mapping).forEach(function (field) {
+            if (!data[field]) {
+              return;
+            }
+
+            let message = data[field];
+
+            if (Array.isArray(message)) {
+              message = message.join(" ");
+            }
+
+            setFieldError(mapping[field], String(message));
+          });
+        }
+
+        /* =========================================================
+     ENVIO
+     ========================================================= */
+
+        async function registerUser() {
+          const name = nameInput.value.trim();
+
+          const email = emailInput.value.trim();
+
+          const phone = phoneInput.value.trim();
+
+          const password1 = password1Input.value;
+
+          const password2 = password2Input.value;
+
+          button.classList.add("btn-loading");
+
+          button.disabled = true;
+
+          button.textContent = "Criando conta...";
+
+          try {
+            const response = await fetch(`${API_URL}/api/register/`, {
+              method: "POST",
+
+              credentials: "include",
+
+              headers: {
+                "Content-Type": "application/json",
+
+                Accept: "application/json",
+              },
+
+              body: JSON.stringify({
+                name: name,
+
+                email: email,
+
+                phone: phone,
+
+                password: password1,
+
+                password1: password1,
+
+                password2: password2,
+              }),
+            });
+
+            let data = null;
+
+            try {
+              data = await response.json();
+            } catch (jsonError) {
+              data = null;
+            }
+
+            if (!response.ok) {
+              applyApiFieldErrors(data);
+
+              throw new Error(getApiErrorMessage(data));
+            }
+
+            showMessage(
+              data?.message || "Conta criada com sucesso! Redirecionando...",
+              "success",
+            );
+
+            /*
+             * Se a API retornar usuário,
+             * mantemos os dados em memória
+             * para uso futuro.
+             */
+
+            if (data && data.user) {
+              try {
+                localStorage.setItem(
+                  "econexos-user",
+                  JSON.stringify(data.user),
+                );
+              } catch (storageError) {
+                console.warn(
+                  "Não foi possível salvar o usuário localmente.",
+                  storageError,
+                );
+              }
+            }
+
+            /*
+             * Se o backend fizer login
+             * automaticamente após o cadastro,
+             * podemos ir direto para a calculadora.
+             *
+             * Caso contrário, o usuário
+             * será direcionado ao login.
+             */
+
+            setTimeout(function () {
+              if (
+                data &&
+                (data.authenticated === true || data.logged_in === true)
+              ) {
+                window.location.href = "/calculadora/";
+              } else {
+                window.location.href = "/login/";
+              }
+            }, 1200);
+          } catch (error) {
+            console.error("Erro ao criar conta:", error);
+
+            showMessage(error.message || "Erro ao criar sua conta.");
+
+            button.disabled = false;
+
+            button.classList.remove("btn-loading");
+
+            button.textContent = "Criar conta";
+          }
+        }
+
+        /* =========================================================
+     SUBMIT
+     ========================================================= */
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const valid = validateForm();
+
+          if (!valid) {
+            return;
+          }
+
+          await registerUser();
+        });
+      })();
+    </script>
+  </body>
 </html>

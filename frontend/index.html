@@ -1,21 +1,68 @@
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
 
-    <meta http-equiv="refresh" content="0; url=/pages/index.html">
+<html lang="pt-BR">
+  <head>
+    ```
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta http-equiv="refresh" content="0; url=/pages/index.html" />
 
     <title>ECONEXUS</title>
-</head>
 
-<body>
-    <p>Carregando ECONEXUS...</p>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+
+        font-family: Arial, Helvetica, sans-serif;
+
+        background: #0f1715;
+        color: #ffffff;
+      }
+
+      .loading {
+        text-align: center;
+      }
+
+      .loading p {
+        margin: 0;
+        opacity: 0.75;
+        font-size: 14px;
+      }
+
+      .loading span {
+        display: block;
+        margin-top: 10px;
+        font-size: 12px;
+        opacity: 0.5;
+      }
+    </style>
+    ```
+  </head>
+
+  <body>
+    ```
+    <main class="loading">
+      <p>Carregando ECONEXUS...</p>
+
+      <span> Aguarde um momento. </span>
+    </main>
 
     <script>
-        window.location.replace("/pages/index.html");
+      window.location.replace("/pages/index.html");
     </script>
-</body>
+    ```
+  </body>
 </html>
-```

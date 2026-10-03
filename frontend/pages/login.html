@@ -1,40 +1,292 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<link rel="icon" type="image/x-icon" href="/assets/images/N - logo 1.png">
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Entrar — ECONEXUS</title>
-<link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-<header class="header">
-  <div class="container nav">
-  <img src="/assets/images/N - logo 1.png" width="80px" alt="ECONEXUS" />
-    <div class="nav-actions">
-      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
-      <a href="/cadastro/" class="btn btn-ghost">Cadastrar</a>
-    </div>
-  </div>
-</header>
+<!doctype html>
 
-<main class="auth-wrap">
-  <div class="auth-card reveal in">
-    <img src="/assets/images/econexus.png" width="280px" alt="ECONEXUS" style="margin: 0 auto; display: block;" />
-    <p class="sub">Acesse sua Calculadora de Carbono</p>
-    <div id="msg" class="msg">{{ form.non_field_errors }}</div>
-    <form method="post" novalidate>
-      {% csrf_token %}
-      <div class="field"><label for="id_email">E-mail</label>{{ form.email }}{{ form.email.errors }}</div>
-      <div class="field"><label for="id_password">Senha</label>{{ form.password }}{{ form.password.errors }}</div>
-      <div class="field-row">
-        <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Lembrar senha</label>
-        <a href="#">Esqueci minha senha</a>
+<html lang="pt-BR" data-theme="light">
+  <head>
+    <link rel="icon" type="image/png" href="/assets/images/N - logo 1.png" />
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Entrar — ECONEXUS</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+    <header class="header">
+      ```
+      <div class="container nav">
+        <!-- LOGO -->
+
+        <a href="/" aria-label="ECONEXUS - Início">
+          <img src="/assets/images/N - logo 1.png" width="80" alt="ECONEXUS" />
+        </a>
+
+        <!-- AÇÕES -->
+
+        <div class="nav-actions">
+          <button
+            class="icon-btn"
+            type="button"
+            onclick="toggleTheme()"
+            aria-label="Alternar tema"
+          >
+            <span class="theme-icon"> 🌙 </span>
+          </button>
+
+          <a href="/cadastro/" class="btn btn-ghost"> Cadastrar </a>
+        </div>
       </div>
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Entrar →</button>
-    </form>
-    <p class="alt">Não tem conta? <a href="/cadastro/">Criar agora</a></p>
-  </div>
-</main>
-<script src="/assets/js/script.js"></script>
-</body>
+      ```
+    </header>
+
+    <!-- =====================================================
+       LOGIN
+       ===================================================== -->
+
+    <main class="auth-wrap">
+      ```
+      <div class="auth-card reveal in">
+        <!-- LOGO -->
+
+        <img
+          src="/assets/images/econexus.png"
+          width="280"
+          alt="ECONEXUS"
+          style="margin: 0 auto; display: block"
+        />
+
+        <!-- DESCRIÇÃO -->
+
+        <p class="sub">Acesse sua Calculadora de Carbono</p>
+
+        <!-- MENSAGEM -->
+
+        <div id="msg" class="msg" role="alert" aria-live="polite"></div>
+
+        <!-- =================================================
+       FORMULÁRIO
+       ================================================= -->
+
+        <form id="loginForm" novalidate>
+          <!-- E-MAIL -->
+
+          <div class="field">
+            <label for="email"> E-mail </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="seu@email.com"
+              required
+            />
+          </div>
+
+          <!-- SENHA -->
+
+          <div class="field">
+            <label for="password"> Senha </label>
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Digite sua senha"
+              required
+            />
+          </div>
+
+          <!-- OPÇÕES -->
+
+          <div class="field-row">
+            <label style="display: flex; gap: 6px; align-items: center">
+              <input type="checkbox" id="remember" />
+
+              Lembrar senha
+            </label>
+
+            <a href="#"> Esqueci minha senha </a>
+          </div>
+
+          <!-- BOTÃO -->
+
+          <button
+            id="loginButton"
+            class="btn btn-primary btn-lg btn-block"
+            type="submit"
+          >
+            Entrar →
+          </button>
+        </form>
+
+        <!-- CADASTRO -->
+
+        <p class="alt">
+          Não tem conta?
+
+          <a href="/cadastro/"> Criar agora </a>
+        </p>
+      </div>
+      ```
+    </main>
+
+    <!-- =====================================================
+       JAVASCRIPT GLOBAL
+       ===================================================== -->
+
+    <script src="/assets/js/script.js"></script>
+
+    <!-- =====================================================
+       LOGIN API
+       ===================================================== -->
+
+    <script>
+      const LOGIN_API_URL = "https://nexus-ykvd.onrender.com";
+
+      const loginForm = document.getElementById("loginForm");
+
+      const loginMessage = document.getElementById("msg");
+
+      const loginButton = document.getElementById("loginButton");
+
+      function showLoginMessage(message, type = "error") {
+        if (!loginMessage) {
+          return;
+        }
+
+        loginMessage.textContent = message;
+
+        loginMessage.style.display = "block";
+
+        loginMessage.dataset.type = type;
+      }
+
+      function clearLoginMessage() {
+        if (!loginMessage) {
+          return;
+        }
+
+        loginMessage.textContent = "";
+
+        loginMessage.style.display = "none";
+      }
+
+      loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        clearLoginMessage();
+
+        const email = document.getElementById("email").value.trim();
+
+        const password = document.getElementById("password").value;
+
+        const remember = document.getElementById("remember").checked;
+
+        /* =============================================
+           VALIDAÇÃO
+           ============================================= */
+
+        if (!email) {
+          showLoginMessage("Digite seu e-mail.");
+
+          return;
+        }
+
+        if (!password) {
+          showLoginMessage("Digite sua senha.");
+
+          return;
+        }
+
+        /* =============================================
+           ESTADO DO BOTÃO
+           ============================================= */
+
+        loginButton.disabled = true;
+
+        loginButton.textContent = "Entrando...";
+
+        try {
+          /* ===========================================
+             ENVIO PARA DJANGO
+             =========================================== */
+
+          const response = await fetch(`${LOGIN_API_URL}/api/login/`, {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+            },
+
+            credentials: "include",
+
+            body: JSON.stringify({
+              email: email,
+
+              password: password,
+
+              remember: remember,
+            }),
+          });
+
+          /* =========================================
+             RESPOSTA
+             ========================================= */
+
+          let data = null;
+
+          try {
+            data = await response.json();
+          } catch {
+            data = null;
+          }
+
+          if (!response.ok) {
+            const errorMessage =
+              data?.error || data?.message || "E-mail ou senha inválidos.";
+
+            showLoginMessage(errorMessage);
+
+            return;
+          }
+
+          /* =========================================
+             LOGIN REALIZADO
+             ========================================= */
+
+          showLoginMessage(
+            data?.message || "Login realizado com sucesso!",
+            "success",
+          );
+
+          /*
+           * Pequeno atraso para permitir
+           * a atualização visual.
+           */
+
+          setTimeout(() => {
+            window.location.href = "/calculadora/";
+          }, 500);
+        } catch (error) {
+          console.error("Erro ao realizar login:", error);
+
+          showLoginMessage(
+            "Não foi possível conectar ao servidor. Tente novamente.",
+          );
+        } finally {
+          loginButton.disabled = false;
+
+          loginButton.textContent = "Entrar →";
+        }
+      });
+    </script>
+  </body>
 </html>

@@ -3,7 +3,6 @@
 <html lang="pt-BR">
 
 <head>
-
   <link
     rel="icon"
     type="image/x-icon"
@@ -12,10 +11,11 @@
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
-  >
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1"
+
+>
 
   <title>Resultados — ECONEXUS</title>
 
@@ -23,610 +23,1146 @@
     rel="stylesheet"
     href="/assets/css/style.css"
   >
-
 </head>
 
-
 <body>
-
 
 <header class="header">
 
   <div class="container nav">
 
-    <img
-      src="/assets/images/N - logo 1.png"
-      width="80"
-      alt="ECONEXUS"
-    >
+```
+<a href="/" aria-label="ECONEXUS - Início">
+  <img
+    src="/assets/images/N - logo 1.png"
+    width="80"
+    alt="ECONEXUS"
+  >
+</a>
 
+<nav class="nav-links">
 
-    <nav class="nav-links">
+  <a href="/">
+    Início
+  </a>
 
-      <a href="/">
-        Início
-      </a>
+  <a href="/calculadora/">
+    Calculadora
+  </a>
 
-      <a href="/calculadora/">
-        Calculadora
-      </a>
+  <a href="/perfil/">
+    Perfil
+  </a>
 
-      <a href="/perfil/">
-        Perfil
-      </a>
+  <a href="/logout/">
+    Sair
+  </a>
 
-      <a href="/logout/">
-        Sair
-      </a>
+</nav>
 
-    </nav>
+<div class="nav-actions">
 
+  <button
+    class="icon-btn"
+    type="button"
+    onclick="toggleTheme()"
+    aria-label="Alternar tema"
+  >
+    <span class="theme-icon">
+      🌙
+    </span>
+  </button>
 
-    <div class="nav-actions">
+  <button
+    class="icon-btn menu-toggle"
+    type="button"
+    onclick="toggleMenu()"
+    aria-label="Abrir menu"
+  >
+    ☰
+  </button>
 
-      <button
-        class="icon-btn"
-        onclick="toggleTheme()"
-      >
-
-        <span class="theme-icon">
-          🌙
-        </span>
-
-      </button>
-
-
-      <button
-        class="icon-btn menu-toggle"
-        onclick="toggleMenu()"
-      >
-        ☰
-      </button>
-
-    </div>
+</div>
+```
 
   </div>
 
 </header>
 
-
-
 <main class="page">
 
   <div class="container">
 
+```
+<!-- RESULTADO PRINCIPAL -->
 
-    <div class="result-hero reveal in">
+<div class="result-hero reveal in">
 
-
-      <p
-        style="color:var(--muted);font-size:.95rem"
-        id="resultTitle"
-      >
-        Sua pegada de carbono anual estimada
-      </p>
-
-
-      <div
-        class="result-num"
-        id="num"
-      >
-        0
-      </div>
+  <p
+    style="color:var(--muted);font-size:.95rem"
+    id="resultTitle"
+  >
+    Sua pegada de carbono anual estimada
+  </p>
 
 
-      <div class="result-unit">
-        kg CO₂ equivalente / ano
-      </div>
+  <div
+    class="result-num"
+    id="num"
+  >
+    0
+  </div>
 
 
-      <div
-        id="indi"
-        class="indicator"
-      >
-        —
-      </div>
+  <div class="result-unit">
+    kg CO₂ equivalente / ano
+  </div>
 
 
-      <div class="donut">
+  <div
+    id="indi"
+    class="indicator"
+  >
+    —
+  </div>
 
-        <svg
-          viewBox="0 0 36 36"
-          width="220"
-          height="220"
+
+  <!-- DONUT -->
+
+  <div class="donut">
+
+    <svg
+      viewBox="0 0 36 36"
+      width="220"
+      height="220"
+      aria-label="Percentual em relação à média mundial"
+    >
+
+      <defs>
+
+        <linearGradient
+          id="g1"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
         >
 
-          <defs>
-
-            <linearGradient
-              id="g1"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-            >
-
-              <stop
-                offset="0%"
-                stop-color="#10b981"
-              >
-
-              <stop
-                offset="100%"
-                stop-color="#0ea5e9"
-              >
-
-            </linearGradient>
-
-          </defs>
-
-
-          <circle
-            cx="18"
-            cy="18"
-            r="15.9"
-            fill="none"
-            stroke="var(--surface-2)"
-            stroke-width="3"
-          />
-
-
-          <circle
-            id="ring"
-            cx="18"
-            cy="18"
-            r="15.9"
-            fill="none"
-            stroke="url(#g1)"
-            stroke-width="3"
-            stroke-dasharray="0 100"
-            stroke-linecap="round"
-            transform="rotate(-90 18 18)"
-            style="transition:stroke-dasharray 1.4s"
-          />
-
-
-          <text
-            x="18"
-            y="20"
-            text-anchor="middle"
-            font-size="6"
-            fill="var(--text)"
-            font-weight="700"
-            id="pct"
+          <stop
+            offset="0%"
+            stop-color="#10b981"
           >
-            0%
-          </text>
 
-        </svg>
+          <stop
+            offset="100%"
+            stop-color="#0ea5e9"
+          >
 
-      </div>
+        </linearGradient>
+
+      </defs>
 
 
-      <p
-        style="color:var(--muted);max-width:520px;margin:10px auto 0"
-        id="comparisonText"
+      <circle
+        cx="18"
+        cy="18"
+        r="15.9"
+        fill="none"
+        stroke="var(--surface-2)"
+        stroke-width="3"
+      />
+
+
+      <circle
+        id="ring"
+        cx="18"
+        cy="18"
+        r="15.9"
+        fill="none"
+        stroke="url(#g1)"
+        stroke-width="3"
+        stroke-dasharray="0 100"
+        stroke-linecap="round"
+        transform="rotate(-90 18 18)"
+        style="transition:stroke-dasharray 1.4s"
+      />
+
+
+      <text
+        x="18"
+        y="20"
+        text-anchor="middle"
+        font-size="6"
+        fill="var(--text)"
+        font-weight="700"
+        id="pct"
       >
+        0%
+      </text>
 
-        Comparação com a média mundial:
+    </svg>
 
-        <strong id="cmp">
-          —
-        </strong>
-
-      </p>
+  </div>
 
 
-      <div
-        style="
-          margin-top:24px;
-          display:flex;
-          gap:12px;
-          justify-content:center;
-          flex-wrap:wrap;
-        "
-      >
+  <p
+    style="color:var(--muted);max-width:520px;margin:10px auto 0"
+    id="comparisonText"
+  >
 
-        <a
-          href="/calculadora/"
-          class="btn btn-ghost"
-        >
-          ↺ Refazer cálculo
-        </a>
+    Comparação com a média mundial:
 
-      </div>
+    <strong id="cmp">
+      —
+    </strong>
 
+  </p>
+
+
+  <div
+    style="
+      margin-top:24px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    "
+  >
+
+    <a
+      href="/calculadora/"
+      class="btn btn-ghost"
+    >
+      ↺ Refazer cálculo
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- DISTRIBUIÇÃO -->
+
+<h3 style="margin:50px 0 16px">
+  Distribuição das emissões
+</h3>
+
+
+<div
+  class="chart"
+  id="breakdown"
+></div>
+
+
+<!-- SUGESTÕES -->
+
+<h3 style="margin:50px 0 16px">
+  Sugestões para reduzir seu impacto
+</h3>
+
+
+<div class="tips">
+
+  <div class="tip">
+
+    <div class="ico">
+      💡
     </div>
 
+    <strong>
+      Energia limpa
+    </strong>
+
+    <p
+      style="color:var(--muted);margin-top:6px;font-size:.9rem"
+    >
+      Migre para tarifas verdes ou instale painéis solares.
+    </p>
+
+  </div>
 
 
-    <h3 style="margin:50px 0 16px">
-      Distribuição das emissões
-    </h3>
+  <div class="tip">
 
-
-    <div
-      class="chart"
-      id="breakdown"
-    ></div>
-
-
-
-    <h3 style="margin:50px 0 16px">
-      Sugestões para reduzir seu impacto
-    </h3>
-
-
-    <div class="tips">
-
-
-      <div class="tip">
-
-        <div class="ico">
-          💡
-        </div>
-
-        <strong>
-          Energia limpa
-        </strong>
-
-        <p
-          style="color:var(--muted);margin-top:6px;font-size:.9rem"
-        >
-          Migre para tarifas verdes ou instale painéis solares.
-        </p>
-
-      </div>
-
-
-
-      <div class="tip">
-
-        <div class="ico">
-          🚲
-        </div>
-
-        <strong>
-          Mobilidade ativa
-        </strong>
-
-        <p
-          style="color:var(--muted);margin-top:6px;font-size:.9rem"
-        >
-          Substitua trajetos curtos de carro por bike ou caminhada.
-        </p>
-
-      </div>
-
-
-
-      <div class="tip">
-
-        <div class="ico">
-          ♻️
-        </div>
-
-        <strong>
-          Reciclagem
-        </strong>
-
-        <p
-          style="color:var(--muted);margin-top:6px;font-size:.9rem"
-        >
-          Separe resíduos e composte orgânicos sempre que possível.
-        </p>
-
-      </div>
-
-
+    <div class="ico">
+      🚲
     </div>
 
+    <strong>
+      Mobilidade ativa
+    </strong>
+
+    <p
+      style="color:var(--muted);margin-top:6px;font-size:.9rem"
+    >
+      Substitua trajetos curtos de carro por bike ou caminhada.
+    </p>
+
+  </div>
+
+
+  <div class="tip">
+
+    <div class="ico">
+      ♻️
+    </div>
+
+    <strong>
+      Reciclagem
+    </strong>
+
+    <p
+      style="color:var(--muted);margin-top:6px;font-size:.9rem"
+    >
+      Separe resíduos e composte orgânicos sempre que possível.
+    </p>
+
+  </div>
+
+</div>
+```
 
   </div>
 
 </main>
 
-
-
 <script src="/assets/js/script.js"></script>
-
-{{ calculation_result|json_script:"calculation-result" }}
-
 
 <script>
 
 (function () {
 
-
-  /* =========================
-     RECUPERA RESULTADO
-     ========================= */
-
-  const storedResult = document.getElementById('calculation-result');
-  const r = storedResult
-    ? JSON.parse(storedResult.textContent)
-    : null;
+  "use strict";
 
 
-  /* =========================
-     CASO NÃO EXISTA RESULTADO
-     ========================= */
+  /* =====================================================
+     CONFIGURAÇÃO
+     ===================================================== */
 
-  if (!r) {
+  const API_URL =
+    window.ECONEXUS_API_URL ||
+    "https://nexus-ykvd.onrender.com";
 
-    document.getElementById('num').textContent = '—';
 
-    document.getElementById('indi').textContent =
-      'Faça um cálculo primeiro';
+  /* =====================================================
+     ELEMENTOS
+     ===================================================== */
 
-    return;
+  const num =
+    document.getElementById("num");
+
+  const indicator =
+    document.getElementById("indi");
+
+  const resultTitle =
+    document.getElementById("resultTitle");
+
+  const ring =
+    document.getElementById("ring");
+
+  const pct =
+    document.getElementById("pct");
+
+  const cmp =
+    document.getElementById("cmp");
+
+  const comparisonText =
+    document.getElementById("comparisonText");
+
+  const breakdownContainer =
+    document.getElementById("breakdown");
+
+
+  /* =====================================================
+     RECUPERA RESULTADO DO LOCALSTORAGE
+     ===================================================== */
+
+  function getLocalResult() {
+
+    try {
+
+      const last =
+        localStorage.getItem("econexos-last");
+
+      if (!last) {
+        return null;
+      }
+
+      return JSON.parse(last);
+
+    } catch (error) {
+
+      console.error(
+        "Erro ao recuperar econexos-last:",
+        error
+      );
+
+      return null;
+
+    }
 
   }
 
 
-  /* =========================
-     TIPO DO CÁLCULO
-     ========================= */
+  /* =====================================================
+     NORMALIZA RESULTADO
+     ===================================================== */
 
-  const tipo = r.tipo || 'fisica';
+  function normalizeResult(data) {
 
-  const isPJ =
-    tipo === 'juridica' ||
-    tipo === 'pj';
+    if (!data) {
+      return null;
+    }
+
+    /*
+     Possíveis formatos:
+
+     {
+       tipo,
+       total,
+       breakdown
+     }
+
+     ou
+
+     {
+       data: {
+         tipo,
+         total,
+         breakdown
+       }
+     }
+    */
+
+    if (data.data) {
+      data = data.data;
+    }
+
+    const total =
+      Number(data.total ?? data.resultado ?? data.co2 ?? 0);
+
+    const tipoOriginal =
+      String(
+        data.tipo ||
+        data.type ||
+        data.tipo_calculo ||
+        "fisica"
+      ).toLowerCase();
+
+    const tipo =
+      tipoOriginal === "pj" ||
+      tipoOriginal === "juridica" ||
+      tipoOriginal === "jurídica"
+        ? "juridica"
+        : "fisica";
+
+    const breakdown =
+      data.breakdown ||
+      data.distribuicao ||
+      data.distribution ||
+      {};
+
+    return {
+      tipo,
+      total,
+      breakdown
+    };
+
+  }
 
 
-  const tipoTexto = isPJ
-    ? 'Pessoa Jurídica'
-    : 'Pessoa Física';
+  /* =====================================================
+     CARREGA RESULTADO
+     ===================================================== */
+
+  async function loadResult() {
+
+    let result =
+      normalizeResult(
+        getLocalResult()
+      );
 
 
-  document.getElementById('resultTitle').textContent =
-    `Pegada de carbono anual estimada — ${tipoTexto}`;
+    /*
+     Primeiro tenta recuperar o último
+     cálculo salvo localmente.
+
+     Isso permite que a página funcione
+     imediatamente após a calculadora.
+    */
 
 
-  /* =========================
-     ANIMAÇÃO DO TOTAL
-     ========================= */
+    if (result) {
 
-  const n = document.getElementById('num');
+      renderResult(result);
 
-  let cur = 0;
+      /*
+       Também tenta sincronizar com o backend.
+      */
 
-  const step = r.total > 0
-    ? r.total / 60
-    : 1;
-
-
-  (function tick () {
-
-    cur += step;
-
-    if (cur >= r.total) {
-
-      n.textContent =
-        Number(r.total).toLocaleString('pt-BR');
+      await tryLoadFromAPI(result);
 
       return;
 
     }
 
-    n.textContent =
-      Math.floor(cur).toLocaleString('pt-BR');
 
-    requestAnimationFrame(tick);
+    /*
+     Caso não exista localStorage,
+     tenta consultar a API.
+    */
 
-  })();
-
-
-  /* =========================
-     NÍVEL
-     ========================= */
-
-  const ind = document.getElementById('indi');
-
-  let lvl = 'Baixo';
-
-  let cls = 'lvl-low';
-
-
-  if (r.total > 6000) {
-
-    lvl = 'Alto';
-
-    cls = 'lvl-high';
-
-  } else if (r.total > 2000) {
-
-    lvl = 'Médio';
-
-    cls = 'lvl-med';
+    await tryLoadFromAPI(null);
 
   }
 
 
-  ind.textContent =
-    'Nível: ' + lvl;
+  /* =====================================================
+     CONSULTA API
+     ===================================================== */
 
-  ind.classList.add(cls);
+  async function tryLoadFromAPI(localResult) {
+
+    try {
+
+      const response =
+        await fetch(
+          `${API_URL}/api/calculations/`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Accept": "application/json"
+            }
+          }
+        );
 
 
-  /* =========================
-     COMPARAÇÃO
-     ========================= */
+      if (!response.ok) {
 
-  const world = 4800;
+        /*
+         Se a API ainda não estiver pronta,
+         não quebra a página.
+        */
+
+        if (!localResult) {
+          showEmptyState();
+        }
+
+        return;
+
+      }
 
 
-  if (!isPJ) {
+      const data =
+        await response.json();
 
-    const pct = Math.min(
-      100,
-      Math.round((r.total / world) * 100)
+
+      /*
+       Alguns formatos possíveis da API:
+       - array
+       - { results: [] }
+       - { data: [] }
+       - objeto único
+      */
+
+      let apiResult = null;
+
+
+      if (Array.isArray(data)) {
+
+        if (data.length > 0) {
+          apiResult =
+            normalizeResult(
+              data[data.length - 1]
+            );
+        }
+
+      } else if (
+        data &&
+        Array.isArray(data.results)
+      ) {
+
+        if (data.results.length > 0) {
+          apiResult =
+            normalizeResult(
+              data.results[data.results.length - 1]
+            );
+        }
+
+      } else if (
+        data &&
+        Array.isArray(data.data)
+      ) {
+
+        if (data.data.length > 0) {
+          apiResult =
+            normalizeResult(
+              data.data[data.data.length - 1]
+            );
+        }
+
+      } else {
+
+        apiResult =
+          normalizeResult(data);
+
+      }
+
+
+      /*
+       Só substitui o resultado local
+       se a API realmente devolver um cálculo.
+      */
+
+      if (
+        apiResult &&
+        apiResult.total >= 0
+      ) {
+
+        saveLocalResult(apiResult);
+
+        renderResult(apiResult);
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Não foi possível consultar a API:",
+        error
+      );
+
+
+      if (!localResult) {
+        showEmptyState();
+      }
+
+    }
+
+  }
+
+
+  /* =====================================================
+     SALVA RESULTADO LOCALMENTE
+     ===================================================== */
+
+  function saveLocalResult(result) {
+
+    try {
+
+      localStorage.setItem(
+        "econexos-last",
+        JSON.stringify(result)
+      );
+
+    } catch (error) {
+
+      console.warn(
+        "Não foi possível salvar o resultado:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ESTADO VAZIO
+     ===================================================== */
+
+  function showEmptyState() {
+
+    num.textContent = "—";
+
+    indicator.textContent =
+      "Faça um cálculo primeiro";
+
+    indicator.className =
+      "indicator";
+
+    resultTitle.textContent =
+      "Nenhum resultado encontrado";
+
+    comparisonText.innerHTML =
+      "Acesse a calculadora para gerar sua pegada de carbono.";
+
+    pct.textContent =
+      "—";
+
+    ring.setAttribute(
+      "stroke-dasharray",
+      "0 100"
     );
+
+    breakdownContainer.innerHTML = `
+      <p style="color:var(--muted)">
+        Nenhum cálculo disponível.
+      </p>
+    `;
+
+  }
+
+
+  /* =====================================================
+     RENDERIZA RESULTADO
+     ===================================================== */
+
+  function renderResult(r) {
+
+    if (!r) {
+
+      showEmptyState();
+
+      return;
+
+    }
+
+
+    const total =
+      Number(r.total) || 0;
+
+
+    const isPJ =
+      r.tipo === "juridica" ||
+      r.tipo === "pj";
+
+
+    const tipoTexto =
+      isPJ
+        ? "Pessoa Jurídica"
+        : "Pessoa Física";
+
+
+    /* =================================================
+       TÍTULO
+       ================================================= */
+
+    resultTitle.textContent =
+      `Pegada de carbono anual estimada — ${tipoTexto}`;
+
+
+    /* =================================================
+       ANIMAÇÃO DO TOTAL
+       ================================================= */
+
+    animateNumber(total);
+
+
+    /* =================================================
+       NÍVEL
+       ================================================= */
+
+    renderLevel(total);
+
+
+    /* =================================================
+       COMPARAÇÃO
+       ================================================= */
+
+    renderComparison(
+      total,
+      isPJ
+    );
+
+
+    /* =================================================
+       DISTRIBUIÇÃO
+       ================================================= */
+
+    renderBreakdown(
+      r.breakdown || {},
+      isPJ
+    );
+
+  }
+
+
+  /* =====================================================
+     ANIMAÇÃO DO NÚMERO
+     ===================================================== */
+
+  function animateNumber(value) {
+
+    if (value <= 0) {
+
+      num.textContent =
+        "0";
+
+      return;
+
+    }
+
+
+    let current = 0;
+
+    const duration = 1000;
+
+    const start =
+      performance.now();
+
+
+    function tick(now) {
+
+      const progress =
+        Math.min(
+          (now - start) / duration,
+          1
+        );
+
+
+      /*
+       Ease-out
+      */
+
+      const eased =
+        1 - Math.pow(
+          1 - progress,
+          3
+        );
+
+
+      current =
+        value * eased;
+
+
+      num.textContent =
+        Math.floor(current)
+          .toLocaleString("pt-BR");
+
+
+      if (progress < 1) {
+
+        requestAnimationFrame(tick);
+
+      } else {
+
+        num.textContent =
+          value.toLocaleString(
+            "pt-BR"
+          );
+
+      }
+
+    }
+
+
+    requestAnimationFrame(tick);
+
+  }
+
+
+  /* =====================================================
+     NÍVEL DE EMISSÃO
+     ===================================================== */
+
+  function renderLevel(total) {
+
+    let level =
+      "Baixo";
+
+    let className =
+      "indicator lvl-low";
+
+
+    if (total > 6000) {
+
+      level =
+        "Alto";
+
+      className =
+        "indicator lvl-high";
+
+    } else if (total > 2000) {
+
+      level =
+        "Médio";
+
+      className =
+        "indicator lvl-med";
+
+    }
+
+
+    indicator.textContent =
+      "Nível: " + level;
+
+    indicator.className =
+      className;
+
+  }
+
+
+  /* =====================================================
+     COMPARAÇÃO COM MÉDIA
+     ===================================================== */
+
+  function renderComparison(
+    total,
+    isPJ
+  ) {
+
+    /*
+     Referência utilizada pela interface
+     para comparação visual.
+    */
+
+    const world =
+      4800;
+
+
+    if (isPJ) {
+
+      comparisonText.innerHTML =
+        'Resultado estimado para a <strong>organização</strong>.';
+
+
+      setTimeout(() => {
+
+        ring.setAttribute(
+          "stroke-dasharray",
+          "75 25"
+        );
+
+        pct.textContent =
+          "PJ";
+
+      }, 150);
+
+
+      return;
+
+    }
+
+
+    const percentage =
+      Math.min(
+        100,
+        Math.round(
+          (total / world) * 100
+        )
+      );
 
 
     setTimeout(() => {
 
-      document
-        .getElementById('ring')
-        .setAttribute(
-          'stroke-dasharray',
-          pct + ' ' + (100 - pct)
-        );
+      ring.setAttribute(
+        "stroke-dasharray",
+        `${percentage} ${100 - percentage}`
+      );
 
 
-      document.getElementById('pct').textContent =
-        pct + '%';
+      pct.textContent =
+        `${percentage}%`;
 
     }, 150);
 
 
     const difference =
-      r.total - world;
+      total - world;
 
 
-    document.getElementById('cmp').textContent =
-      (difference > 0 ? '+' : '') +
-      difference.toLocaleString('pt-BR') +
-      ' kg em relação à média mundial (' +
-      world.toLocaleString('pt-BR') +
-      ' kg)';
+    const formattedDifference =
+      Math.abs(difference)
+        .toLocaleString("pt-BR");
 
 
-  } else {
+    if (difference > 0) {
 
-    document.getElementById('comparisonText').innerHTML =
-      'Resultado estimado para a <strong>organização</strong>.';
+      cmp.textContent =
+        `+${formattedDifference} kg acima da média mundial (${world.toLocaleString("pt-BR")} kg)`;
+
+    } else if (difference < 0) {
+
+      cmp.textContent =
+        `${formattedDifference} kg abaixo da média mundial (${world.toLocaleString("pt-BR")} kg)`;
+
+    } else {
+
+      cmp.textContent =
+        `igual à média mundial (${world.toLocaleString("pt-BR")} kg)`;
+
+    }
+
+  }
+
+
+  /* =====================================================
+     DISTRIBUIÇÃO
+     ===================================================== */
+
+  function renderBreakdown(
+    breakdown,
+    isPJ
+  ) {
+
+    const labelsPF = {
+
+      energia:
+        "Energia",
+
+      transporte:
+        "Carro",
+
+      combustivel:
+        "Combustível",
+
+      gasolina:
+        "Gasolina",
+
+      diesel:
+        "Diesel",
+
+      viagens:
+        "Aviões",
+
+      agua:
+        "Água",
+
+      residuos:
+        "Resíduos"
+
+    };
+
+
+    const labelsPJ = {
+
+      energia:
+        "Energia",
+
+      combustivel:
+        "Combustível",
+
+      gasolina:
+        "Gasolina",
+
+      diesel:
+        "Diesel",
+
+      transporte:
+        "Frota",
+
+      viagens:
+        "Viagens",
+
+      residuos:
+        "Resíduos"
+
+    };
+
+
+    const labels =
+      isPJ
+        ? labelsPJ
+        : labelsPF;
+
+
+    const entries =
+      Object.entries(
+        breakdown
+      ).filter(
+        ([, value]) =>
+          Number(value) > 0
+      );
+
+
+    if (!entries.length) {
+
+      breakdownContainer.innerHTML = `
+        <p style="color:var(--muted)">
+          Nenhuma distribuição disponível para este cálculo.
+        </p>
+      `;
+
+      return;
+
+    }
+
+
+    const max =
+      Math.max(
+        ...entries.map(
+          ([, value]) =>
+            Number(value) || 0
+        )
+      ) || 1;
+
+
+    breakdownContainer.innerHTML =
+      entries
+        .map(
+          ([key, value]) => {
+
+            const numericValue =
+              Number(value) || 0;
+
+
+            const height =
+              Math.max(
+                6,
+                Math.round(
+                  (numericValue / max) * 100
+                )
+              );
+
+
+            const label =
+              labels[key] ||
+              key;
+
+
+            return `
+
+              <div
+                class="bar"
+                style="height:0"
+                data-h="${height}"
+                title="${label}: ${numericValue.toLocaleString("pt-BR")} kg CO₂"
+              >
+
+                <span>
+                  ${label}
+                </span>
+
+              </div>
+
+            `;
+
+          }
+        )
+        .join("");
 
 
     setTimeout(() => {
 
       document
-        .getElementById('ring')
-        .setAttribute(
-          'stroke-dasharray',
-          '75 25'
+        .querySelectorAll(
+          "#breakdown .bar"
+        )
+        .forEach(
+          bar => {
+
+            bar.style.height =
+              `${bar.dataset.h}%`;
+
+          }
         );
 
-
-      document.getElementById('pct').textContent =
-        'PJ';
-
-    }, 150);
+    }, 250);
 
   }
 
 
-  /* =========================
-     DISTRIBUIÇÃO
-     ========================= */
+  /* =====================================================
+     INICIALIZA
+     ===================================================== */
 
-  const labelsPF = {
-
-    energia: 'Energia',
-
-    transporte: 'Carro',
-
-    combustivel: 'Combustível',
-
-    viagens: 'Aviões',
-
-    agua: 'Água',
-
-    residuos: 'Resíduos'
-
-  };
-
-
-  const labelsPJ = {
-
-    energia: 'Energia',
-
-    combustivel: 'Combustível',
-
-    transporte: 'Frota',
-
-    viagens: 'Viagens',
-
-    residuos: 'Resíduos'
-
-  };
-
-
-  const labels =
-    isPJ
-      ? labelsPJ
-      : labelsPF;
-
-
-  const breakdown =
-    r.breakdown || {};
-
-
-  const entries =
-    Object.entries(breakdown);
-
-
-  const max =
-    Math.max(
-      ...entries.map(
-        ([, v]) => Number(v) || 0
-      )
-    ) || 1;
-
-
-  document.getElementById('breakdown').innerHTML =
-
-    entries.map(([k, v]) => {
-
-      const valor =
-        Number(v) || 0;
-
-
-      const h =
-        Math.max(
-          6,
-          Math.round(
-            (valor / max) * 100
-          )
-        );
-
-
-      return `
-
-        <div
-          class="bar"
-          style="height:0"
-          data-h="${h}"
-        >
-
-          <span>
-            ${labels[k] || k}
-          </span>
-
-        </div>
-
-      `;
-
-    }).join('');
-
-
-  setTimeout(() => {
-
-    document
-      .querySelectorAll('#breakdown .bar')
-      .forEach(bar => {
-
-        bar.style.height =
-          bar.dataset.h + '%';
-
-      });
-
-  }, 250);
-
+  loadResult();
 
 })();
 
 </script>
+
 </body>
 </html>
