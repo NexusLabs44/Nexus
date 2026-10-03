@@ -1,0 +1,60 @@
+{
+  "rewrites": [
+    {
+      "source": "/calculadora",
+      "destination": "/pages/calculadora.html"
+    },
+    {
+      "source": "/calculadora/",
+      "destination": "/pages/calculadora.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/pages/login.html"
+    },
+    {
+      "source": "/login/",
+      "destination": "/pages/login.html"
+    },
+    {
+      "source": "/cadastro",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "/cadastro/",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "/register/",
+      "destination": "/pages/register.html"
+    },
+    {
+      "source": "/resultados",
+      "destination": "/pages/resultados.html"
+    },
+    {
+      "source": "/resultados/",
+      "destination": "/pages/resultados.html"
+    },
+    {
+      "source": "/perfil",
+      "destination": "/pages/profile.html"
+    },
+    {
+      "source": "/perfil/",
+      "destination": "/pages/profile.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/pages/profile.html"
+    },
+    {
+      "source": "/profile/",
+      "destination": "/pages/profile.html"
+    }
+  ]
+}
