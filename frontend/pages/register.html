@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cadastro — ECONEXUS</title>
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+      <img src="/assets/images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <a href="/login/" class="btn btn-ghost">Entrar</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-card reveal in">
+      <img src="/assets/images/econexus.png" width="180px" alt="logo econexus" style="margin: 0 auto; display: block;" />
+    <p class="sub">Comece a medir e reduzir seu impacto hoje</p>
+    <div id="msg" class="msg">{{ form.non_field_errors }}</div>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="field"><label for="id_name">Nome completo</label>{{ form.name }}{{ form.name.errors }}</div>
+      <div class="field"><label for="id_email">E-mail</label>{{ form.email }}{{ form.email.errors }}</div>
+      <div class="field"><label for="id_phone">Telefone</label>{{ form.phone }}{{ form.phone.errors }}</div>
+      <div class="field"><label for="id_password1">Senha</label>{{ form.password1 }}{{ form.password1.errors }}</div>
+      <div class="field"><label for="id_password2">Confirmar senha</label>{{ form.password2 }}{{ form.password2.errors }}</div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Criar conta</button>
+    </form>
+    <p class="alt">Já tem uma conta? <a href="/login/">Entrar</a></p>
+  </div>
+</main>
+<script src="/assets/js/script.js"></script>
+</body>
+</html>

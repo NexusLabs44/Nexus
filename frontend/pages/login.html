@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/x-icon" href="/assets/images/N - logo 1.png">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Entrar — ECONEXUS</title>
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container nav">
+  <img src="/assets/images/N - logo 1.png" width="80px" alt="ECONEXUS" />
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleTheme()"><span class="theme-icon">🌙</span></button>
+      <a href="/cadastro/" class="btn btn-ghost">Cadastrar</a>
+    </div>
+  </div>
+</header>
+
+<main class="auth-wrap">
+  <div class="auth-card reveal in">
+    <img src="/assets/images/econexus.png" width="280px" alt="ECONEXUS" style="margin: 0 auto; display: block;" />
+    <p class="sub">Acesse sua Calculadora de Carbono</p>
+    <div id="msg" class="msg">{{ form.non_field_errors }}</div>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="field"><label for="id_email">E-mail</label>{{ form.email }}{{ form.email.errors }}</div>
+      <div class="field"><label for="id_password">Senha</label>{{ form.password }}{{ form.password.errors }}</div>
+      <div class="field-row">
+        <label style="display:flex;gap:6px;align-items:center"><input type="checkbox"> Lembrar senha</label>
+        <a href="#">Esqueci minha senha</a>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Entrar →</button>
+    </form>
+    <p class="alt">Não tem conta? <a href="/cadastro/">Criar agora</a></p>
+  </div>
+</main>
+<script src="/assets/js/script.js"></script>
+</body>
+</html>
