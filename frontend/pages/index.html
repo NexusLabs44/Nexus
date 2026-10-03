@@ -1,881 +1,488 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="pt-BR" data-theme="light">
+  <head>
+    <link rel="icon" type="image/png" href="/assets/images/N - logo 1.png" />
 
-<head>
+    <meta charset="UTF-8" />
 
-  <link
-    rel="icon"
-    type="image/png"
-    href="/assets/images/N - logo 1.png"
-  >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8">
+    <title>ECONEXUS — Tecnologia para um futuro sustentável</title>
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+    <meta
+      name="description"
+      content="ECONEXUS conecta tecnologia e meio ambiente para reduzir sua pegada de carbono."
+    />
 
->
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
 
-  <title>
-    ECONEXUS — Tecnologia para um futuro sustentável
-  </title>
-
-<meta
-name="description"
-content="ECONEXUS conecta tecnologia e meio ambiente para reduzir sua pegada de carbono."
-
->
-
-  <link
-    rel="stylesheet"
-    href="/assets/css/style.css"
-  >
-
-</head>
-
-<body>
-
-  <!-- =====================================================
+  <body>
+    <!-- =====================================================
        HEADER
        ===================================================== -->
 
-  <header class="header">
+    <header class="header">
+      
+      <div class="container nav">
+        <!-- LOGO -->
 
-```
-<div class="container nav">
+        <a href="/" aria-label="ECONEXUS - Início">
+          <img src="/assets/images/N - logo 1.png" width="80" alt="ECONEXUS" />
+        </a>
 
+        <!-- MENU -->
 
-  <!-- LOGO -->
+        <nav class="nav-links">
+          <a href="#sobre"> Sobre </a>
 
-  <a
-    href="/"
-    aria-label="ECONEXUS - Início"
-  >
+          <a href="#intuito"> Plataforma </a>
 
-    <img
-      src="/assets/images/N - logo 1.png"
-      width="80"
-      alt="ECONEXUS"
-    >
+          <a href="#faq"> FAQ </a>
 
-  </a>
+          <a href="/calculadora/"> Calculadora </a>
+        </nav>
 
+        <!-- AÇÕES -->
 
-  <!-- MENU -->
+        <div class="nav-actions">
+          <!-- TEMA -->
 
-  <nav class="nav-links">
+          <button
+            class="icon-btn"
+            type="button"
+            onclick="toggleTheme()"
+            aria-label="Alternar tema"
+          >
+            <span class="theme-icon"> 🌙 </span>
+          </button>
 
-    <a href="#sobre">
-      Sobre
-    </a>
+          <!-- LOGIN -->
 
-    <a href="#intuito">
-      Plataforma
-    </a>
+          <a href="/login/" class="btn btn-ghost"> Entrar </a>
 
-    <a href="#faq">
-      FAQ
-    </a>
+          <!-- CADASTRO -->
 
-    <a href="/calculadora/">
-      Calculadora
-    </a>
+          <a href="/cadastro/" class="btn btn-primary"> Cadastrar </a>
 
-  </nav>
+          <!-- MENU MOBILE -->
 
+          <button
+            class="icon-btn menu-toggle"
+            type="button"
+            onclick="toggleMenu()"
+            aria-label="Abrir menu"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+      
+    </header>
 
-  <!-- AÇÕES -->
-
-  <div class="nav-actions">
-
-
-    <!-- TEMA -->
-
-    <button
-      class="icon-btn"
-      type="button"
-      onclick="toggleTheme()"
-      aria-label="Alternar tema"
-    >
-
-      <span class="theme-icon">
-        🌙
-      </span>
-
-    </button>
-
-
-    <!-- LOGIN -->
-
-    <a
-      href="/login/"
-      class="btn btn-ghost"
-    >
-      Entrar
-    </a>
-
-
-    <!-- CADASTRO -->
-
-    <a
-      href="/cadastro/"
-      class="btn btn-primary"
-    >
-      Cadastrar
-    </a>
-
-
-    <!-- MENU MOBILE -->
-
-    <button
-      class="icon-btn menu-toggle"
-      type="button"
-      onclick="toggleMenu()"
-      aria-label="Abrir menu"
-    >
-      ☰
-    </button>
-
-  </div>
-
-</div>
-```
-
-  </header>
-
-  <!-- =====================================================
+    <!-- =====================================================
        CONTEÚDO PRINCIPAL
        ===================================================== -->
 
-  <main>
-
-```
-<!-- ===================================================
+    <main>
+      
+      <!-- ===================================================
      HERO
      =================================================== -->
 
-<section class="hero">
+      <section class="hero">
+        <div class="container hero-grid">
+          <!-- TEXTO -->
 
-  <div class="container hero-grid">
+          <div class="reveal">
+            <span class="eyebrow">
+              🌿 Plataforma de inteligência ambiental
+            </span>
 
+            <h1>
+              O futuro do planeta começa com
 
-    <!-- TEXTO -->
+              <span class="grad"> conexões inteligentes </span>
+            </h1>
 
-    <div class="reveal">
+            <p class="lead">
+              Monitore, reduza e compense sua pegada de carbono com uma
+              plataforma que une dados, ciência e tecnologia para um impacto
+              ambiental real.
+            </p>
 
-      <span class="eyebrow">
-        🌿 Plataforma de inteligência ambiental
-      </span>
+            <div class="hero-cta">
+              <a href="/calculadora/" class="btn btn-primary btn-lg">
+                Calcular minha pegada →
+              </a>
 
+              <a href="#sobre" class="btn btn-ghost btn-lg">
+                Conhecer ECONEXUS
+              </a>
+            </div>
+          </div>
 
-      <h1>
+          <!-- ILUSTRAÇÃO -->
 
-        O futuro do planeta começa com
+          <div class="reveal">
+            <img
+              class="img-light"
+              src="/assets/images/ilustracao-cor-azul.webp"
+              width="450"
+              alt="Ilustração da plataforma ECONEXUS"
+            />
 
-        <span class="grad">
-          conexões inteligentes
-        </span>
+            <img
+              class="img-dark"
+              src="/assets/images/ilustracao-cor-branca.webp"
+              width="450"
+              alt="Ilustração da plataforma ECONEXUS no modo escuro"
+            />
+          </div>
+        </div>
+      </section>
 
-      </h1>
-
-
-      <p class="lead">
-
-        Monitore, reduza e compense sua pegada
-        de carbono com uma plataforma que une
-        dados, ciência e tecnologia para um impacto
-        ambiental real.
-
-      </p>
-
-
-      <div class="hero-cta">
-
-
-        <a
-          href="/calculadora/"
-          class="btn btn-primary btn-lg"
-        >
-          Calcular minha pegada →
-        </a>
-
-
-        <a
-          href="#sobre"
-          class="btn btn-ghost btn-lg"
-        >
-          Conhecer ECONEXUS
-        </a>
-
-      </div>
-
-    </div>
-
-
-    <!-- ILUSTRAÇÃO -->
-
-    <div class="reveal">
-
-      <img
-        class="img-light"
-        src="/assets/images/ilustracao-cor-azul.webp"
-        width="450"
-        alt="Ilustração da plataforma ECONEXUS"
-      >
-
-
-      <img
-        class="img-dark"
-        src="/assets/images/ilustracao-cor-branca.webp"
-        width="450"
-        alt="Ilustração da plataforma ECONEXUS no modo escuro"
-      >
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================================================
+      <!-- ===================================================
      SOBRE
      =================================================== -->
 
-<section id="sobre">
+      <section id="sobre">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>
+              O que é
 
-  <div class="container">
+              <span
+                style="
+                  background: var(--grad);
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                "
+              >
+                ECONEXUS
+              </span>
+            </h2>
 
+            <p>
+              Conectando tecnologia e sustentabilidade para um futuro mais
+              verde.
+            </p>
+          </div>
 
-    <div class="section-head reveal">
+          <!-- MISSÃO / VISÃO / VALORES -->
 
-      <h2>
+          <div class="mvv">
+            <!-- MISSÃO -->
 
-        O que é
+            <div class="card reveal">
+              <div class="card-icon">🎯</div>
 
-        <span
-          style="
-            background:var(--grad);
-            -webkit-background-clip:text;
-            background-clip:text;
-            color:transparent;
-          "
-        >
-          ECONEXUS
-        </span>
+              <h3>Missão</h3>
 
-      </h2>
+              <p>
+                Tornar a sustentabilidade mensurável, acessível e parte do dia a
+                dia de cada pessoa e organização.
+              </p>
+            </div>
 
+            <!-- VISÃO -->
 
-      <p>
-        Conectando tecnologia e sustentabilidade
-        para um futuro mais verde.
-      </p>
+            <div class="card reveal">
+              <div class="card-icon">👁️</div>
 
-    </div>
+              <h3>Visão</h3>
 
+              <p>
+                Ser a plataforma de referência em inteligência ambiental na
+                América Latina até 2030.
+              </p>
+            </div>
 
-    <!-- MISSÃO / VISÃO / VALORES -->
+            <!-- VALORES -->
 
-    <div class="mvv">
+            <div class="card reveal">
+              <div class="card-icon">💚</div>
 
+              <h3>Valores</h3>
 
-      <!-- MISSÃO -->
-
-      <div class="card reveal">
-
-        <div class="card-icon">
-          🎯
+              <p>
+                Transparência, ciência, inovação responsável e compromisso com o
+                planeta.
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
 
-
-        <h3>
-          Missão
-        </h3>
-
-
-        <p>
-
-          Tornar a sustentabilidade mensurável,
-          acessível e parte do dia a dia de cada
-          pessoa e organização.
-
-        </p>
-
-      </div>
-
-
-      <!-- VISÃO -->
-
-      <div class="card reveal">
-
-        <div class="card-icon">
-          👁️
-        </div>
-
-
-        <h3>
-          Visão
-        </h3>
-
-
-        <p>
-
-          Ser a plataforma de referência em
-          inteligência ambiental na América Latina
-          até 2030.
-
-        </p>
-
-      </div>
-
-
-      <!-- VALORES -->
-
-      <div class="card reveal">
-
-        <div class="card-icon">
-          💚
-        </div>
-
-
-        <h3>
-          Valores
-        </h3>
-
-
-        <p>
-
-          Transparência, ciência, inovação
-          responsável e compromisso com o planeta.
-
-        </p>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================================================
+      <!-- ===================================================
      PLATAFORMA
      =================================================== -->
 
-<section
-  id="intuito"
-  style="background:var(--surface-2)"
->
+      <section id="intuito" style="background: var(--surface-2)">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow"> 🌎 Plataforma </span>
 
-  <div class="container">
+            <h2>Tecnologia aplicada ao impacto ambiental</h2>
 
+            <p>
+              Transforme seus dados de consumo em informações que ajudam você a
+              compreender e reduzir seu impacto ambiental.
+            </p>
+          </div>
 
-    <div class="section-head reveal">
+          <div class="mvv">
+            <!-- CALCULADORA -->
 
-      <span class="eyebrow">
-        🌎 Plataforma
-      </span>
+            <div class="card reveal">
+              <div class="card-icon">🌱</div>
 
+              <h3>Calculadora de carbono</h3>
 
-      <h2>
-        Tecnologia aplicada ao impacto ambiental
-      </h2>
+              <p>
+                Estime suas emissões a partir de informações sobre energia,
+                transporte, combustível, água e resíduos.
+              </p>
 
+              <a
+                href="/calculadora/"
+                class="btn btn-primary"
+                style="margin-top: 20px"
+              >
+                Calcular agora →
+              </a>
+            </div>
 
-      <p>
+            <!-- RESULTADOS -->
 
-        Transforme seus dados de consumo em
-        informações que ajudam você a compreender
-        e reduzir seu impacto ambiental.
+            <div class="card reveal">
+              <div class="card-icon">📊</div>
 
-      </p>
+              <h3>Resultados</h3>
 
-    </div>
+              <p>
+                Consulte seus cálculos e acompanhe informações sobre sua pegada
+                de carbono ao longo do tempo.
+              </p>
 
+              <a
+                href="/resultados/"
+                class="btn btn-ghost"
+                style="margin-top: 20px"
+              >
+                Ver resultados →
+              </a>
+            </div>
 
-    <div class="mvv">
+            <!-- PERFIL -->
 
+            <div class="card reveal">
+              <div class="card-icon">👤</div>
 
-      <!-- CALCULADORA -->
+              <h3>Seu perfil</h3>
 
-      <div class="card reveal">
+              <p>
+                Acesse seus dados pessoais e acompanhe sua utilização da
+                plataforma.
+              </p>
 
-        <div class="card-icon">
-          🌱
+              <a href="/perfil/" class="btn btn-ghost" style="margin-top: 20px">
+                Acessar perfil →
+              </a>
+            </div>
+          </div>
         </div>
+      </section>
 
-
-        <h3>
-          Calculadora de carbono
-        </h3>
-
-
-        <p>
-
-          Estime suas emissões a partir de
-          informações sobre energia, transporte,
-          combustível, água e resíduos.
-
-        </p>
-
-
-        <a
-          href="/calculadora/"
-          class="btn btn-primary"
-          style="margin-top:20px"
-        >
-          Calcular agora →
-        </a>
-
-      </div>
-
-
-      <!-- RESULTADOS -->
-
-      <div class="card reveal">
-
-        <div class="card-icon">
-          📊
-        </div>
-
-
-        <h3>
-          Resultados
-        </h3>
-
-
-        <p>
-
-          Consulte seus cálculos e acompanhe
-          informações sobre sua pegada de carbono
-          ao longo do tempo.
-
-        </p>
-
-
-        <a
-          href="/resultados/"
-          class="btn btn-ghost"
-          style="margin-top:20px"
-        >
-          Ver resultados →
-        </a>
-
-      </div>
-
-
-      <!-- PERFIL -->
-
-      <div class="card reveal">
-
-        <div class="card-icon">
-          👤
-        </div>
-
-
-        <h3>
-          Seu perfil
-        </h3>
-
-
-        <p>
-
-          Acesse seus dados pessoais e acompanhe
-          sua utilização da plataforma.
-
-        </p>
-
-
-        <a
-          href="/perfil/"
-          class="btn btn-ghost"
-          style="margin-top:20px"
-        >
-          Acessar perfil →
-        </a>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<!-- ===================================================
+      <!-- ===================================================
      FAQ
      =================================================== -->
 
-<section
-  id="faq"
-  style="background:var(--surface-2)"
->
+      <section id="faq" style="background: var(--surface-2)">
+        <div class="container">
+          <div class="section-head reveal">
+            <h2>Perguntas frequentes</h2>
 
-  <div class="container">
+            <p>
+              Tudo o que você precisa saber sobre carbono, sustentabilidade e a
+              ECONEXUS.
+            </p>
+          </div>
 
+          <div class="faq">
+            <!-- FAQ 1 -->
 
-    <div class="section-head reveal">
+            <div class="faq-item">
+              <div class="faq-q">O que é pegada de carbono?</div>
 
-      <h2>
-        Perguntas frequentes
-      </h2>
+              <div class="faq-a">
+                É a quantidade total de gases de efeito estufa emitidos direta
+                ou indiretamente por uma pessoa, organização, evento ou produto,
+                expressa em equivalente de CO₂.
+              </div>
+            </div>
 
+            <!-- FAQ 2 -->
 
-      <p>
+            <div class="faq-item">
+              <div class="faq-q">
+                Como a calculadora estima minhas emissões?
+              </div>
 
-        Tudo o que você precisa saber sobre
-        carbono, sustentabilidade e a ECONEXUS.
+              <div class="faq-a">
+                Usamos coeficientes de emissão aplicados aos seus dados de
+                consumo de energia, transporte, água e resíduos.
+              </div>
+            </div>
 
-      </p>
+            <!-- FAQ 3 -->
 
-    </div>
+            <div class="faq-item">
+              <div class="faq-q">
+                Posso compensar minha pegada pela plataforma?
+              </div>
 
+              <div class="faq-a">
+                A plataforma pode futuramente conectar usuários a projetos
+                ambientais voltados à redução ou compensação de emissões.
+              </div>
+            </div>
 
-    <div class="faq">
+            <!-- FAQ 4 -->
 
+            <div class="faq-item">
+              <div class="faq-q">A ECONEXUS atende empresas?</div>
 
-      <!-- FAQ 1 -->
+              <div class="faq-a">
+                Sim. A plataforma possui suporte para cálculos voltados a
+                pessoas jurídicas, permitindo estimar o impacto ambiental das
+                atividades de uma empresa.
+              </div>
+            </div>
 
-      <div class="faq-item">
+            <!-- FAQ 5 -->
 
-        <div class="faq-q">
+            <div class="faq-item">
+              <div class="faq-q">Meus dados estão seguros?</div>
 
-          O que é pegada de carbono?
-
+              <div class="faq-a">
+                Os dados da plataforma são processados pelo backend Django e
+                armazenados no banco de dados configurado para a aplicação. A
+                implementação de autenticação, sessões, HTTPS e controles de
+                acesso deve ser mantida no backend.
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+      
+    </main>
 
-
-        <div class="faq-a">
-
-          É a quantidade total de gases de efeito
-          estufa emitidos direta ou indiretamente por
-          uma pessoa, organização, evento ou produto,
-          expressa em equivalente de CO₂.
-
-        </div>
-
-      </div>
-
-
-      <!-- FAQ 2 -->
-
-      <div class="faq-item">
-
-        <div class="faq-q">
-
-          Como a calculadora estima minhas emissões?
-
-        </div>
-
-
-        <div class="faq-a">
-
-          Usamos coeficientes de emissão aplicados
-          aos seus dados de consumo de energia,
-          transporte, água e resíduos.
-
-        </div>
-
-      </div>
-
-
-      <!-- FAQ 3 -->
-
-      <div class="faq-item">
-
-        <div class="faq-q">
-
-          Posso compensar minha pegada pela plataforma?
-
-        </div>
-
-
-        <div class="faq-a">
-
-          A plataforma pode futuramente conectar
-          usuários a projetos ambientais voltados
-          à redução ou compensação de emissões.
-
-        </div>
-
-      </div>
-
-
-      <!-- FAQ 4 -->
-
-      <div class="faq-item">
-
-        <div class="faq-q">
-
-          A ECONEXUS atende empresas?
-
-        </div>
-
-
-        <div class="faq-a">
-
-          Sim. A plataforma possui suporte para
-          cálculos voltados a pessoas jurídicas,
-          permitindo estimar o impacto ambiental
-          das atividades de uma empresa.
-
-        </div>
-
-      </div>
-
-
-      <!-- FAQ 5 -->
-
-      <div class="faq-item">
-
-        <div class="faq-q">
-
-          Meus dados estão seguros?
-
-        </div>
-
-
-        <div class="faq-a">
-
-          Os dados da plataforma são processados
-          pelo backend Django e armazenados no
-          banco de dados configurado para a aplicação.
-          A implementação de autenticação, sessões,
-          HTTPS e controles de acesso deve ser mantida
-          no backend.
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-```
-
-  </main>
-
-  <!-- =====================================================
+    <!-- =====================================================
        FOOTER
        ===================================================== -->
 
-  <footer class="footer">
+    <footer class="footer">
+      
+      <div class="container">
+        <div class="footer-grid">
+          <!-- MARCA -->
 
-```
-<div class="container">
+          <div>
+            <a href="/" aria-label="ECONEXUS - Início">
+              <img src="/assets/images/Nexus.png" width="150" alt="ECONEXUS" />
+            </a>
 
+            <p
+              style="
+                color: var(--muted);
+                margin-top: 14px;
+                max-width: 320px;
+                font-size: 0.92rem;
+              "
+            >
+              Inovação que transforma o comum em extraordinário.
+            </p>
 
-  <div class="footer-grid">
+            <div class="socials">
+              <a href="#" aria-label="Instagram"> 📷 </a>
 
+              <a href="#" aria-label="LinkedIn"> in </a>
 
-    <!-- MARCA -->
+              <a href="#" aria-label="Twitter"> 🐦 </a>
 
-    <div>
+              <a href="#" aria-label="YouTube"> ▶ </a>
+            </div>
+          </div>
 
-      <a
-        href="/"
-        aria-label="ECONEXUS - Início"
-      >
+          <!-- PLATAFORMA -->
 
-        <img
-          src="/assets/images/Nexus.png"
-          width="150"
-          alt="ECONEXUS"
-        >
+          <div>
+            <h5>Plataforma</h5>
 
-      </a>
+            <ul>
+              <li>
+                <a href="/calculadora/"> Calculadora </a>
+              </li>
 
+              <li>
+                <a href="/resultados/"> Relatórios </a>
+              </li>
 
-      <p
-        style="
-          color:var(--muted);
-          margin-top:14px;
-          max-width:320px;
-          font-size:.92rem;
-        "
-      >
+              <li>
+                <a href="/perfil/"> Perfil </a>
+              </li>
+            </ul>
+          </div>
 
-        Inovação que transforma o comum
-        em extraordinário.
+          <!-- EMPRESA -->
 
-      </p>
+          <div>
+            <h5>Empresa</h5>
 
+            <ul>
+              <li>
+                <a href="#sobre"> Sobre </a>
+              </li>
 
-      <div class="socials">
+              <li>
+                <a href="#equipe"> Equipe </a>
+              </li>
 
-        <a
-          href="#"
-          aria-label="Instagram"
-        >
-          📷
-        </a>
+              <li>
+                <a href="#faq"> FAQ </a>
+              </li>
+            </ul>
+          </div>
 
+          <!-- CONTATO -->
 
-        <a
-          href="#"
-          aria-label="LinkedIn"
-        >
-          in
-        </a>
+          <div>
+            <h5>Contato</h5>
 
+            <ul>
+              <li>@system.nexus</li>
 
-        <a
-          href="#"
-          aria-label="Twitter"
-        >
-          🐦
-        </a>
+              <li>+55 81 7338-9895</li>
 
+              <li>Caruaru, PE</li>
+            </ul>
+          </div>
+        </div>
 
-        <a
-          href="#"
-          aria-label="YouTube"
-        >
-          ▶
-        </a>
+        <!-- COPYRIGHT -->
 
+        <div class="copy">© 2026 ECONEXUS · Todos os direitos reservados</div>
       </div>
+      
+    </footer>
 
-    </div>
-
-
-    <!-- PLATAFORMA -->
-
-    <div>
-
-      <h5>
-        Plataforma
-      </h5>
-
-
-      <ul>
-
-        <li>
-          <a href="/calculadora/">
-            Calculadora
-          </a>
-        </li>
-
-
-        <li>
-          <a href="/resultados/">
-            Relatórios
-          </a>
-        </li>
-
-
-        <li>
-          <a href="/perfil/">
-            Perfil
-          </a>
-        </li>
-
-      </ul>
-
-    </div>
-
-
-    <!-- EMPRESA -->
-
-    <div>
-
-      <h5>
-        Empresa
-      </h5>
-
-
-      <ul>
-
-        <li>
-          <a href="#sobre">
-            Sobre
-          </a>
-        </li>
-
-
-        <li>
-          <a href="#equipe">
-            Equipe
-          </a>
-        </li>
-
-
-        <li>
-          <a href="#faq">
-            FAQ
-          </a>
-        </li>
-
-      </ul>
-
-    </div>
-
-
-    <!-- CONTATO -->
-
-    <div>
-
-      <h5>
-        Contato
-      </h5>
-
-
-      <ul>
-
-        <li>
-          @system.nexus
-        </li>
-
-
-        <li>
-          +55 81 7338-9895
-        </li>
-
-
-        <li>
-          Caruaru, PE
-        </li>
-
-      </ul>
-
-    </div>
-
-
-  </div>
-
-
-  <!-- COPYRIGHT -->
-
-  <div class="copy">
-
-    © 2026 ECONEXUS · Todos os direitos reservados
-
-  </div>
-
-</div>
-```
-
-  </footer>
-
-  <!-- =====================================================
+    <!-- =====================================================
        JAVASCRIPT
        ===================================================== -->
 
-  <script src="/assets/js/script.js"></script>
-
-</body>
-
+    <script src="/assets/js/script.js"></script>
+  </body>
 </html>
