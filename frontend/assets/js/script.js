@@ -1,303 +1,1012 @@
-/* ECONEXUS — JS */
-(function(){
-  // Theme
-  const root=document.documentElement;
-  const saved=localStorage.getItem('econexos-theme')||'light';
-  root.setAttribute('data-theme',saved);
-  window.toggleTheme=()=>{
-    const cur=root.getAttribute('data-theme')==='dark'?'light':'dark';
-    root.setAttribute('data-theme',cur);
-    localStorage.setItem('econexos-theme',cur);
-    document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=cur==='dark'?'☀️':'🌙');
-  };
-  document.querySelectorAll('.theme-icon').forEach(e=>e.textContent=saved==='dark'?'☀️':'🌙');
+/* =========================================================
+   ECONEXUS — SCRIPT.JS
+   Frontend: Vercel
+   Backend: Django / Render
+   ========================================================= */
 
-  // Header scroll
-  const header=document.querySelector('.header');
-  if(header){window.addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>20))}
 
-  // Mobile menu
-  window.toggleMenu=()=>document.querySelector('.nav-links')?.classList.toggle('open');
+/* =========================================================
+   CONFIGURAÇÃO GLOBAL
+   ========================================================= */
 
-  // Reveal on scroll
-  const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const ECONEXUS_API_URL = "https://nexus-ykvd.onrender.com";
 
-  // FAQ
-  document.querySelectorAll('.faq-item').forEach(it=>{
-    it.querySelector('.faq-q').addEventListener('click',()=>it.classList.toggle('open'));
-  });
+window.ECONEXUS_API_URL = ECONEXUS_API_URL;
 
-  // Animated counters
-  document.querySelectorAll('[data-count]').forEach(el=>{
-    const target=+el.dataset.count;let cur=0;const step=target/60;
-    const tick=()=>{cur+=step;if(cur>=target){el.textContent=target.toLocaleString('pt-BR');return}
-      el.textContent=Math.floor(cur).toLocaleString('pt-BR');requestAnimationFrame(tick)};
-    new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){tick();o.disconnect()}}),{threshold:.5}).observe(el);
-  });
 
-  // Bars
-  document.querySelectorAll('.bar').forEach(b=>{
-    new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){b.style.height=b.dataset.h+'%';o.disconnect()}}),{threshold:.3}).observe(b);
-  });
-})();
+/* =========================================================
+   TEMA
+   ========================================================= */
 
-/* ===== CALCULATOR ===== */
+(function initTheme() {
 
-let selectedProfile = 'fisica';
+    const root = document.documentElement;
 
+    const savedTheme =
+        localStorage.getItem("econexos-theme") || "light";
 
-function selectProfile(type) {
-
-  selectedProfile = type;
-  const typeInput = document.getElementById('tipoCalculo');
-  if (typeInput) typeInput.value = type === 'juridica' ? 'juridica' : 'fisica';
-
-  const formFisica = document.getElementById('formFisica');
-  const formJuridica = document.getElementById('formJuridica');
-
-  const btnFisica = document.getElementById('btnFisica');
-  const btnJuridica = document.getElementById('btnJuridica');
-
-
-  if (type === 'fisica') {
-
-    formFisica.style.display = 'block';
-    formJuridica.style.display = 'none';
-
-    btnFisica.classList.add('active');
-    btnJuridica.classList.remove('active');
-
-    setFieldsDisabled(formFisica, false);
-    setFieldsDisabled(formJuridica, true);
-
-  } else {
-
-    formFisica.style.display = 'none';
-    formJuridica.style.display = 'block';
-
-    btnFisica.classList.remove('active');
-    btnJuridica.classList.add('active');
-
-    setFieldsDisabled(formFisica, true);
-    setFieldsDisabled(formJuridica, false);
-
-  }
-}
-
-
-function setFieldsDisabled(container, disabled) {
-
-  container.querySelectorAll('input').forEach(input => {
-    input.disabled = disabled;
-    input.required = !disabled;
-  });
-
-}
-
-
-function calcCarbon(e) {
-
-  e.preventDefault();
-
-  const f = e.target;
-
-
-  /* ==================== */
-  /* PESSOA FÍSICA */
-  /* ==================== */
-
-  if (selectedProfile === 'fisica') {
-
-    const energia = +f.energia.value || 0;
-    const transporte = +f.transporte.value || 0;
-    const combustivel = +f.combustivel.value || 0;
-    const viagens = +f.viagens.value || 0;
-    const agua = +f.agua.value || 0;
-    const residuos = +f.residuos.value || 0;
-
-
-    const total =
-      energia * 0.0817 * 12 +
-      transporte * 0.21 * 52 +
-      combustivel * 2.31 * 12 +
-      viagens * 90 +
-      agua * 0.000298 * 365 +
-      residuos * 2.5 * 52;
-
-
-    const breakdown = {
-
-      energia: energia * 0.0817 * 12,
-
-      transporte: transporte * 0.21 * 52,
-
-      combustivel: combustivel * 2.31 * 12,
-
-      viagens: viagens * 90,
-
-      agua: agua * 0.000298 * 365,
-
-      residuos: residuos * 2.5 * 52
-
-    };
-
-
-    const result = {
-
-      tipo: 'fisica',
-
-      total: Math.round(total),
-
-      breakdown,
-
-      date: new Date().toISOString()
-
-    };
-
-
-    saveCarbonResult(result);
-
-    return false;
-
-  }
-
-
-  /* ==================== */
-  /* PESSOA JURÍDICA */
-  /* ==================== */
-
-  if (selectedProfile === 'juridica') {
-
-    const empresa = f.empresa.value.trim();
-
-    const funcionarios = +f.funcionarios.value || 0;
-
-    const energia = +f.energiaPJ.value || 0;
-
-    const gasolina = +f.gasolinaPJ.value || 0;
-
-    const diesel = +f.dieselPJ.value || 0;
-
-    const transporte = +f.transportePJ.value || 0;
-
-    const viagens = +f.viagensPJ.value || 0;
-
-    const residuos = +f.residuosPJ.value || 0;
-
-
-    /*
-      ATENÇÃO:
-
-      Estes fatores são provisórios nesta primeira versão.
-      Antes da versão final da Nexus, vamos validar cada fator
-      com uma fonte/metodologia adequada ao projeto.
-    */
-
-
-    const energiaCO2 =
-      energia * 0.0817 * 12;
-
-
-    const gasolinaCO2 =
-      gasolina * 2.31 * 12;
-
-
-    const dieselCO2 =
-      diesel * 2.68 * 12;
-
-
-    const transporteCO2 =
-      transporte * 0.21 * 12;
-
-
-    const viagensCO2 =
-      viagens * 90;
-
-
-    const residuosCO2 =
-      residuos * 2.5 * 52;
-
-
-    const total =
-      energiaCO2 +
-      gasolinaCO2 +
-      dieselCO2 +
-      transporteCO2 +
-      viagensCO2 +
-      residuosCO2;
-
-
-    const breakdown = {
-
-      energia: energiaCO2,
-
-      combustivel: gasolinaCO2 + dieselCO2,
-
-      transporte: transporteCO2,
-
-      viagens: viagensCO2,
-
-      residuos: residuosCO2
-
-    };
-
-
-    const result = {
-
-      tipo: 'juridica',
-
-      empresa,
-
-      funcionarios,
-
-      total: Math.round(total),
-
-      breakdown,
-
-      date: new Date().toISOString()
-
-    };
-
-
-    saveCarbonResult(result);
-
-    return false;
-
-  }
-
-}
-
-
-function saveCarbonResult(result) {
-
-  /* Histórico */
-
-  const hist =
-    JSON.parse(
-      localStorage.getItem('econexos-history') || '[]'
+    root.setAttribute(
+        "data-theme",
+        savedTheme
     );
 
 
-  hist.unshift(result);
+    window.toggleTheme = function () {
+
+        const currentTheme =
+            root.getAttribute("data-theme") === "dark"
+                ? "light"
+                : "dark";
 
 
-  localStorage.setItem(
-    'econexos-history',
-    JSON.stringify(hist.slice(0, 20))
-  );
+        root.setAttribute(
+            "data-theme",
+            currentTheme
+        );
 
 
-  /* Último resultado */
-
-  localStorage.setItem(
-    'econexos-last',
-    JSON.stringify(result)
-  );
+        localStorage.setItem(
+            "econexos-theme",
+            currentTheme
+        );
 
 
-  /* Ir para resultados */
+        document
+            .querySelectorAll(".theme-icon")
+            .forEach(icon => {
 
-  location.href = 'resultados.html';
+                icon.textContent =
+                    currentTheme === "dark"
+                        ? "☀️"
+                        : "🌙";
+
+            });
+
+    };
+
+
+    document
+        .querySelectorAll(".theme-icon")
+        .forEach(icon => {
+
+            icon.textContent =
+                savedTheme === "dark"
+                    ? "☀️"
+                    : "🌙";
+
+        });
+
+})();
+
+
+/* =========================================================
+   HEADER / SCROLL
+   ========================================================= */
+
+(function initHeader() {
+
+    const header =
+        document.querySelector(".header");
+
+
+    if (!header) {
+        return;
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        () => {
+
+            header.classList.toggle(
+                "scrolled",
+                window.scrollY > 20
+            );
+
+        }
+    );
+
+})();
+
+
+/* =========================================================
+   MENU MOBILE
+   ========================================================= */
+
+window.toggleMenu = function () {
+
+    const nav =
+        document.querySelector(".nav-links");
+
+
+    if (!nav) {
+        return;
+    }
+
+
+    nav.classList.toggle("open");
+
+};
+
+
+/* =========================================================
+   REVEAL ON SCROLL
+   ========================================================= */
+
+(function initReveal() {
+
+    const elements =
+        document.querySelectorAll(".reveal");
+
+
+    if (!elements.length) {
+        return;
+    }
+
+
+    if (!("IntersectionObserver" in window)) {
+
+        elements.forEach(element => {
+
+            element.classList.add("in");
+
+        });
+
+        return;
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("in");
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+
+    elements.forEach(element => {
+
+        observer.observe(element);
+
+    });
+
+})();
+
+
+/* =========================================================
+   FAQ
+   ========================================================= */
+
+(function initFAQ() {
+
+    document
+        .querySelectorAll(".faq-item")
+        .forEach(item => {
+
+            const question =
+                item.querySelector(".faq-q");
+
+
+            if (!question) {
+                return;
+            }
+
+
+            question.addEventListener(
+                "click",
+                () => {
+
+                    item.classList.toggle("open");
+
+                }
+            );
+
+        });
+
+})();
+
+
+/* =========================================================
+   CONTADORES ANIMADOS
+   ========================================================= */
+
+(function initCounters() {
+
+    const counters =
+        document.querySelectorAll("[data-count]");
+
+
+    if (!counters.length) {
+        return;
+    }
+
+
+    counters.forEach(element => {
+
+        const target =
+            Number(element.dataset.count) || 0;
+
+
+        let current = 0;
+
+
+        const step =
+            target / 60;
+
+
+        const animate = () => {
+
+            current += step;
+
+
+            if (current >= target) {
+
+                element.textContent =
+                    target.toLocaleString("pt-BR");
+
+                return;
+            }
+
+
+            element.textContent =
+                Math.floor(current)
+                    .toLocaleString("pt-BR");
+
+
+            requestAnimationFrame(animate);
+
+        };
+
+
+        if (!("IntersectionObserver" in window)) {
+
+            animate();
+
+            return;
+        }
+
+
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            animate();
+
+                            observerInstance.disconnect();
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.5
+                }
+            );
+
+
+        observer.observe(element);
+
+    });
+
+})();
+
+
+/* =========================================================
+   BARRAS ANIMADAS
+   ========================================================= */
+
+(function initBars() {
+
+    const bars =
+        document.querySelectorAll(".bar");
+
+
+    if (!bars.length) {
+        return;
+    }
+
+
+    bars.forEach(bar => {
+
+        const height =
+            Number(bar.dataset.h) || 0;
+
+
+        if (!("IntersectionObserver" in window)) {
+
+            bar.style.height =
+                `${height}%`;
+
+            return;
+        }
+
+
+        const observer =
+            new IntersectionObserver(
+                (entries, observerInstance) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            bar.style.height =
+                                `${height}%`;
+
+                            observerInstance.disconnect();
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.3
+                }
+            );
+
+
+        observer.observe(bar);
+
+    });
+
+})();
+
+
+/* =========================================================
+   CALCULADORA
+   ========================================================= */
+
+let selectedProfile = "fisica";
+
+
+/* =========================================================
+   SELECIONAR PESSOA FÍSICA / JURÍDICA
+   ========================================================= */
+
+function selectProfile(type) {
+
+    selectedProfile =
+        type === "juridica"
+            ? "juridica"
+            : "fisica";
+
+
+    const typeInput =
+        document.getElementById("tipoCalculo");
+
+
+    if (typeInput) {
+
+        typeInput.value =
+            selectedProfile;
+
+    }
+
+
+    const formFisica =
+        document.getElementById("formFisica");
+
+
+    const formJuridica =
+        document.getElementById("formJuridica");
+
+
+    const btnFisica =
+        document.getElementById("btnFisica");
+
+
+    const btnJuridica =
+        document.getElementById("btnJuridica");
+
+
+    if (
+        !formFisica ||
+        !formJuridica ||
+        !btnFisica ||
+        !btnJuridica
+    ) {
+
+        console.warn(
+            "Elementos da calculadora não encontrados."
+        );
+
+        return;
+    }
+
+
+    if (selectedProfile === "fisica") {
+
+        formFisica.style.display =
+            "block";
+
+
+        formJuridica.style.display =
+            "none";
+
+
+        btnFisica.classList.add(
+            "active"
+        );
+
+
+        btnJuridica.classList.remove(
+            "active"
+        );
+
+
+        setFieldsDisabled(
+            formFisica,
+            false
+        );
+
+
+        setFieldsDisabled(
+            formJuridica,
+            true
+        );
+
+    } else {
+
+        formFisica.style.display =
+            "none";
+
+
+        formJuridica.style.display =
+            "block";
+
+
+        btnFisica.classList.remove(
+            "active"
+        );
+
+
+        btnJuridica.classList.add(
+            "active"
+        );
+
+
+        setFieldsDisabled(
+            formFisica,
+            true
+        );
+
+
+        setFieldsDisabled(
+            formJuridica,
+            false
+        );
+
+    }
 
 }
+
+
+/* =========================================================
+   HABILITAR / DESABILITAR CAMPOS
+   ========================================================= */
+
+function setFieldsDisabled(
+    container,
+    disabled
+) {
+
+    if (!container) {
+        return;
+    }
+
+
+    container
+        .querySelectorAll("input, select, textarea")
+        .forEach(field => {
+
+            field.disabled =
+                disabled;
+
+
+            field.required =
+                !disabled;
+
+        });
+
+}
+
+
+/* =========================================================
+   CALCULADORA DE CARBONO
+   ========================================================= */
+
+async function calcCarbon(event) {
+
+    event.preventDefault();
+
+
+    const form =
+        event.target;
+
+
+    if (!form) {
+
+        console.error(
+            "Formulário não encontrado."
+        );
+
+        return false;
+    }
+
+
+    /* =====================================================
+       PESSOA FÍSICA
+       ===================================================== */
+
+    if (selectedProfile === "fisica") {
+
+        const energia =
+            Number(
+                form.energia?.value
+            ) || 0;
+
+
+        const transporte =
+            Number(
+                form.transporte?.value
+            ) || 0;
+
+
+        const combustivel =
+            Number(
+                form.combustivel?.value
+            ) || 0;
+
+
+        const viagens =
+            Number(
+                form.viagens?.value
+            ) || 0;
+
+
+        const agua =
+            Number(
+                form.agua?.value
+            ) || 0;
+
+
+        const residuos =
+            Number(
+                form.residuos?.value
+            ) || 0;
+
+
+        /* ---------------------------------------------
+           Fatores de cálculo
+           --------------------------------------------- */
+
+        const energiaCO2 =
+            energia * 0.0817 * 12;
+
+
+        const transporteCO2 =
+            transporte * 0.21 * 52;
+
+
+        const combustivelCO2 =
+            combustivel * 2.31 * 12;
+
+
+        const viagensCO2 =
+            viagens * 90;
+
+
+        const aguaCO2 =
+            agua * 0.000298 * 365;
+
+
+        const residuosCO2 =
+            residuos * 2.5 * 52;
+
+
+        /* ---------------------------------------------
+           Total
+           --------------------------------------------- */
+
+        const total =
+            energiaCO2 +
+            transporteCO2 +
+            combustivelCO2 +
+            viagensCO2 +
+            aguaCO2 +
+            residuosCO2;
+
+
+        /* ---------------------------------------------
+           Detalhamento
+           --------------------------------------------- */
+
+        const breakdown = {
+
+            energia:
+                energiaCO2,
+
+            transporte:
+                transporteCO2,
+
+            combustivel:
+                combustivelCO2,
+
+            viagens:
+                viagensCO2,
+
+            agua:
+                aguaCO2,
+
+            residuos:
+                residuosCO2
+
+        };
+
+
+        /* ---------------------------------------------
+           Resultado
+           --------------------------------------------- */
+
+        const result = {
+
+            tipo: "fisica",
+
+            total:
+                Math.round(total),
+
+            breakdown,
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        await saveCarbonResult(result);
+
+
+        return false;
+    }
+
+
+    /* =====================================================
+       PESSOA JURÍDICA
+       ===================================================== */
+
+    if (selectedProfile === "juridica") {
+
+        const empresa =
+            String(
+                form.empresa?.value || ""
+            ).trim();
+
+
+        const funcionarios =
+            Number(
+                form.funcionarios?.value
+            ) || 0;
+
+
+        const energia =
+            Number(
+                form.energiaPJ?.value
+            ) || 0;
+
+
+        const gasolina =
+            Number(
+                form.gasolinaPJ?.value
+            ) || 0;
+
+
+        const diesel =
+            Number(
+                form.dieselPJ?.value
+            ) || 0;
+
+
+        const transporte =
+            Number(
+                form.transportePJ?.value
+            ) || 0;
+
+
+        const viagens =
+            Number(
+                form.viagensPJ?.value
+            ) || 0;
+
+
+        const residuos =
+            Number(
+                form.residuosPJ?.value
+            ) || 0;
+
+
+        /* ---------------------------------------------
+           Fatores provisórios
+           --------------------------------------------- */
+
+        const energiaCO2 =
+            energia * 0.0817 * 12;
+
+
+        const gasolinaCO2 =
+            gasolina * 2.31 * 12;
+
+
+        const dieselCO2 =
+            diesel * 2.68 * 12;
+
+
+        const transporteCO2 =
+            transporte * 0.21 * 12;
+
+
+        const viagensCO2 =
+            viagens * 90;
+
+
+        const residuosCO2 =
+            residuos * 2.5 * 52;
+
+
+        /* ---------------------------------------------
+           Total
+           --------------------------------------------- */
+
+        const total =
+            energiaCO2 +
+            gasolinaCO2 +
+            dieselCO2 +
+            transporteCO2 +
+            viagensCO2 +
+            residuosCO2;
+
+
+        /* ---------------------------------------------
+           Detalhamento
+           --------------------------------------------- */
+
+        const breakdown = {
+
+            energia:
+                energiaCO2,
+
+            combustivel:
+                gasolinaCO2 +
+                dieselCO2,
+
+            transporte:
+                transporteCO2,
+
+            viagens:
+                viagensCO2,
+
+            residuos:
+                residuosCO2
+
+        };
+
+
+        /* ---------------------------------------------
+           Resultado
+           --------------------------------------------- */
+
+        const result = {
+
+            tipo: "juridica",
+
+            empresa,
+
+            funcionarios,
+
+            total:
+                Math.round(total),
+
+            breakdown,
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        await saveCarbonResult(result);
+
+
+        return false;
+    }
+
+
+    console.error(
+        "Tipo de cálculo desconhecido."
+    );
+
+
+    return false;
+}
+
+
+/* =========================================================
+   SALVAR RESULTADO
+   ========================================================= */
+
+async function saveCarbonResult(result) {
+
+    /* =====================================================
+       VALIDAÇÃO
+       ===================================================== */
+
+    if (!result) {
+
+        console.error(
+            "Resultado inválido."
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       LOCAL STORAGE — BACKUP
+       ===================================================== */
+
+    try {
+
+        const history =
+            JSON.parse(
+                localStorage.getItem(
+                    "econexos-history"
+                ) || "[]"
+            );
+
+
+        history.unshift(result);
+
+
+        localStorage.setItem(
+            "econexos-history",
+            JSON.stringify(
+                history.slice(0, 20)
+            )
+        );
+
+
+        localStorage.setItem(
+            "econexos-last",
+            JSON.stringify(result)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao salvar resultado localmente:",
+            error
+        );
+
+    }
+
+
+    /* =====================================================
+       API DJANGO
+       ===================================================== */
+
+    try {
+
+        const response =
+            await fetch(
+                `${ECONEXUS_API_URL}/api/calculations/`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    credentials: "include",
+
+                    body:
+                        JSON.stringify(result)
+                }
+            );
+
+
+        /* ---------------------------------------------
+           Verificar resposta
+           --------------------------------------------- */
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+
+            console.error(
+                "Erro retornado pela API Django:",
+                response.status,
+                errorText
+            );
+
+        } else {
+
+            let data = null;
+
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch {
+
+                data = null;
+
+            }
+
+
+            console.log(
+                "Cálculo enviado ao backend:",
+                data
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Erro de conexão com o backend:",
+            error
+        );
+
+    }
+
+
+    /* =====================================================
+       REDIRECIONAR PARA RESULTADOS
+       ===================================================== */
+
+    window.location.href =
+        "/resultados/";
+
+}
+
+
+/* =========================================================
+   EXPOR FUNÇÕES PARA O HTML
+   ========================================================= */
+
+window.selectProfile =
+    selectProfile;
+
+
+window.setFieldsDisabled =
+    setFieldsDisabled;
+
+
+window.calcCarbon =
+    calcCarbon;
+
+
+window.saveCarbonResult =
+    saveCarbonResult;
